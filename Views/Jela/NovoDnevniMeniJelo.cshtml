@@ -1,0 +1,96 @@
+﻿@model IamHungry.Models.DnevniMeni
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h2>Dnevni meni</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.cijena, "Cijena", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cijena, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cijena, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dan, "Dan u tjednu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    List<SelectListItem> listItems = new List<SelectListItem>();
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Ponedjeljak",
+                        Value = "Ponedjeljak",
+                        Selected = true
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Utorak",
+                        Value = "Utorak"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Srijeda",
+                        Value = "Srijeda"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Cetvrtak",
+                        Value = "Cetvrtak"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Petak",
+                        Value = "Petak"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Subota",
+                        Value = "Subota"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Nedjelja",
+                        Value = "Nedjelja"
+                    });
+                }
+
+                @Html.DropDownListFor(model => model.dan, listItems, htmlAttributes: new { @class = "form-control" })
+
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImeJela, "Ime jela", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ImeJela, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ImeJela, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OpisJela, "Opis jela", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OpisJela, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OpisJela, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Skuhaj novo jelo" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Povratak", "UrediDnevniMeni")
+</div>

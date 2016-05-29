@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GladnoDijeteModelStoreContainer" CdmEntityContainer="FoodDbContext">
+    <EntitySetMapping Name="DnevniMenis">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.DnevniMeni">
+        <MappingFragment StoreEntitySet="DnevniMeni">
+          <ScalarProperty Name="MeniId" ColumnName="MeniId" />
+          <ScalarProperty Name="JelaId" ColumnName="JelaId" />
+          <ScalarProperty Name="cijena" ColumnName="cijena" />
+          <ScalarProperty Name="dan" ColumnName="dan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dostavas">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Dostava">
+        <MappingFragment StoreEntitySet="Dostava">
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="KvartId" ColumnName="KvartId" />
+          <ScalarProperty Name="vrijeme" ColumnName="vrijeme" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grads">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Grad">
+        <MappingFragment StoreEntitySet="Grad">
+          <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
+          <ScalarProperty Name="ImeGrada" ColumnName="ImeGrada" />
+          <ScalarProperty Name="ZupId" ColumnName="ZupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jelas">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Jela">
+        <MappingFragment StoreEntitySet="Jela">
+          <ScalarProperty Name="JelaId" ColumnName="JelaId" />
+          <ScalarProperty Name="ImeJela" ColumnName="ImeJela" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kvarts">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Kvart">
+        <MappingFragment StoreEntitySet="Kvart">
+          <ScalarProperty Name="KvartId" ColumnName="KvartId" />
+          <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
+          <ScalarProperty Name="ImeKvarta" ColumnName="ImeKvarta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menis">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Meni">
+        <MappingFragment StoreEntitySet="Meni">
+          <ScalarProperty Name="MeniId" ColumnName="MeniId" />
+          <ScalarProperty Name="JelaId" ColumnName="JelaId" />
+          <ScalarProperty Name="cijena" ColumnName="cijena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Narudbas">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Narudba">
+        <MappingFragment StoreEntitySet="Narudba">
+          <ScalarProperty Name="NarId" ColumnName="NarId" />
+          <ScalarProperty Name="ImeNarucitelja" ColumnName="ImeNarucitelja" />
+          <ScalarProperty Name="PrezimeNarucitelja" ColumnName="PrezimeNarucitelja" />
+          <ScalarProperty Name="ZupId" ColumnName="ZupId" />
+          <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
+          <ScalarProperty Name="KvartId" ColumnName="KvartId" />
+          <ScalarProperty Name="UlicaId" ColumnName="UlicaId" />
+          <ScalarProperty Name="KucniBroj" ColumnName="KucniBroj" />
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="JelaId" ColumnName="JelaId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RadnoVrijemes">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.RadnoVrijeme">
+        <MappingFragment StoreEntitySet="RadnoVrijeme">
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="Dan" ColumnName="Dan" />
+          <ScalarProperty Name="VrijemeOd" ColumnName="VrijemeOd" />
+          <ScalarProperty Name="VrijemeDo" ColumnName="VrijemeDo" />
+          <ScalarProperty Name="StatusRada" ColumnName="StatusRada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Rating">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="jedna" ColumnName="jedna" />
+          <ScalarProperty Name="dvije" ColumnName="dvije" />
+          <ScalarProperty Name="tri" ColumnName="tri" />
+          <ScalarProperty Name="cetiri" ColumnName="cetiri" />
+          <ScalarProperty Name="pet" ColumnName="pet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Restorans">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Restoran">
+        <MappingFragment StoreEntitySet="Restoran">
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="ImeRest" ColumnName="ImeRest" />
+          <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
+          <ScalarProperty Name="Ulica" ColumnName="UlicaId" />
+          <ScalarProperty Name="KvartId" ColumnName="KvartId" />
+          <ScalarProperty Name="MeniId" ColumnName="MeniId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="Passw" ColumnName="Passw" />
+          <ScalarProperty Name="KucniBroj" ColumnName="KucniBroj" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ulicas">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Ulica">
+        <MappingFragment StoreEntitySet="Ulica">
+          <ScalarProperty Name="UlicaId" ColumnName="UlicaId" />
+          <ScalarProperty Name="ImeUlice" ColumnName="ImeUlice" />
+          <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vlasniks">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Vlasnik">
+        <MappingFragment StoreEntitySet="Vlasnik">
+          <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
+          <ScalarProperty Name="ImeVlasnika" ColumnName="ImeVlasnika" />
+          <ScalarProperty Name="PrezimeVlasnika" ColumnName="PrezimeVlasnika" />
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zupanijas">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Zupanija">
+        <MappingFragment StoreEntitySet="Zupanija">
+          <ScalarProperty Name="ZupId" ColumnName="ZupId" />
+          <ScalarProperty Name="ZupIme" ColumnName="ZupIme" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

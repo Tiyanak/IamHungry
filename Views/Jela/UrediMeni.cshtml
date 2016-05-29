@@ -1,0 +1,40 @@
+﻿@model IEnumerable<IamHungry.Models.Meni>
+
+
+
+<h2>
+    @Session["UserName"]
+</h2>
+<hr />
+<p>
+    @Html.ActionLink("Skuhaj novo jelo", "NovoMeniJelo")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Jelo")
+        </th>
+        <th>
+            @Html.DisplayName("Cijena")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImeJela)<br>
+            @Html.DisplayFor(modelItem => item.OpisJela)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cijena)
+        </td>
+
+        <td>
+            @Html.ActionLink("Izmijeni", "IzmijeniMeni", new {  idM=item.MeniId, idJ = item.JelaId  }) |
+            @Html.ActionLink("Izbrisi", "IzbrisiMeni", new { idM = item.MeniId, idJ = item.JelaId  })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Početna";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Home/getZup",
+            datatype: "Json",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#ZupId').append('<option value="' + value.ZupId + '"">' + value.ZupIme + '</option>');
+                });
+            }
+        });
+
+        $('#ZupId').change(function () {
+            $('#PostBroj').empty();
+
+            $.ajax({
+                type: "GET",
+                url: "/Home/getGrad",
+                datatype: "Json",
+                data: { ZupId: $('#ZupId').val() },
+                success: function (data) {
+                    $.each(data, function (index, value) {
+                        $('#PostBroj').append('<option value="' + value.PostBroj + '"">' + value.ImeGrada + '</option>');
+                    });
+                }
+            });
+
+            $('#KvartId').change(function () {
+                $('#KvartId').empty();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/getKvart",
+                    datatype: "Json",
+                    data: { PostBroj: $('#PostBroj').val() },
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            $('#KvartId').append('<option value="' + value.KvartId + '"">' + value.ImeKvarta + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<div class="jumbotron vertical text-center">
+    <h1>
+        Mama ja sam gladan!
+    </h1>
+    
+</div>
+
+@if (ViewBag.Nar != null)
+{
+    <br>
+    <h1>@ViewBag.Nar</h1>
+    <br>
+}
+
+<div class="row">
+    <div class="dropdown">
+        <div class="form-group">
+            <p>
+                Županija: @Html.DropDownList("ZupId", new SelectList(String.Empty, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+                Grad: @Html.DropDownList("PostBroj", new SelectList(String.Empty, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+                Kvart: @Html.DropDownList("KvartId", new SelectList(String.Empty, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+            </p>
+
+            
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Pretraga" onclick="location.href='@Url.Action("SearchRestorans", "Home")'"  , class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    <div>
+</div>
+
+
+<div class="row">
+    <h2>Dnevne ponude</h2>
+    <pre>
+        <tab align="left">Neki restoran      <tab align="center">Ponuda dana            <tab align="right">Informacije<br>
+
+        <tab align="left">Zagreb      <tab align="center">Kobasice           <tab align="right">Radno vrijeme: 8:00 - 20:00<br>
+
+        <tab align="left">Zagreb     <tab align="center">Svinjetina             <tab align="right">Rating: 4 zvjezdice<br>
+
+        <tab align="left">Vrbik      <tab align="center">Junetina             <tab align="right">e-mail: restoran&#64jao.com<br>
+        
+    </pre>    
+</div>
+
+<div class="row">
+    <h2>
+        Neka galerija slika
+    </h2>
+</div>

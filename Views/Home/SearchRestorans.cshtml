@@ -1,0 +1,37 @@
+﻿@model IEnumerable<IamHungry.Models.Restoran>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ImeRest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grad.ImeGrada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kvart.ImeKvarta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImeRest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grad.ImeGrada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kvart.ImeKvarta)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Pogledaj meni", "Meni", new { idMenija = item.MeniId } )  |
+            @Html.ActionLink("Pogledaj dnevni meni", "DnevniMeni", new { idMenija = item.RestId }) |
+            @Html.ActionLink("Informacije", "RestInfo", new { idMenija = item.RestId})
+        </td>
+    </tr>
+}
+
+</table>

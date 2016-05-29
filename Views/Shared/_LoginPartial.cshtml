@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Session["UserId"] != null)
+{
+    using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(Session["UserName"] + "!", "RestInfo", "Home", new { idMenija = Session["UserId"].ToString() })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Odjava</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Registracija", "RegisterRestorana", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        @if (Session["UserId"] == null)
+        {
+            <li>@Html.ActionLink("Prijava", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        }else
+        {
+            <li>@Session["UserName"]</li>
+        }
+       
+    </ul>
+}

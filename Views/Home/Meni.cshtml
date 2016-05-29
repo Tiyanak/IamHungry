@@ -1,0 +1,40 @@
+﻿@model IEnumerable<IamHungry.Models.Meni>
+
+<h2>
+    @ViewBag.ImeTrenRestorana
+</h2>
+
+<br>
+
+<table class="table">
+    <tr>
+        <th>
+            Ime Jela
+        </th>
+        <th>
+            Cijena (Kn)
+        </th>
+        <th>
+            Opcije
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>          
+          <h4><b>@Html.DisplayFor(modelItem => item.ImeJela)</b> </h4>  <br>
+           @Html.DisplayFor(modelItem => item.OpisJela)
+            
+        </td>
+        <td>
+           <h4> <b>@Html.DisplayFor(modelItem => item.cijena)</b></h4>
+        </td>
+        <td>
+            @Html.ActionLink("Naruci", "NarudbaMeni",  new { idM=item.MeniId, idJ=item.ImeJela, cijenaJ=item.cijena })
+        </td>
+       
+    </tr>
+
+}
+
+</table>

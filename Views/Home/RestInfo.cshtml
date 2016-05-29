@@ -1,0 +1,129 @@
+﻿@model IamHungry.Models.Restoran
+
+<div>
+    <h2>@Html.DisplayFor(model => model.ImeRest)</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <h4><b>
+        <dt>
+            @Html.DisplayName("Grad")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grad.ImeGrada)
+        </dd>
+       
+        <br>
+        <dt>
+            @Html.DisplayName("Kvart")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kvart.ImeKvarta)
+        </dd>
+        
+        <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ulica)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ulica)
+        </dd>
+        
+        <br>
+        <dt>
+            @Html.DisplayName("Kucni broj")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KucniBroj)
+        </dd>
+        
+        <br>
+        <dt>
+            @Html.DisplayName("E-mail")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+        
+        <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefon)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefon)
+        </dd>
+       
+        <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mobitel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mobitel)
+        </dd>
+        
+        <br>
+        <dt>
+            @Html.DisplayName("Ocjena")
+        </dt>
+        <dd>
+            @ViewBag.Rating
+        </dd>
+
+        <br>
+        <dt>
+            Ponedjeljak
+        <dt>
+        <dd>
+            @ViewBag.pon
+        </dd>
+        <br>
+        <dt>
+            Utorak
+        <dt>
+        <dd>
+            @ViewBag.uto
+        </dd>
+
+        <br>
+        <dt>
+            Srijeda
+        <dt>
+        <dd>
+            @ViewBag.sri
+        </dd>
+
+        <br>
+        <dt>
+            Četvrtak
+        <dt>
+        <dd>
+            @ViewBag.cet
+        </dd>
+
+        <br>
+        <dt>
+            Petak
+        <dt>
+        <dd>
+            @ViewBag.pet
+        </dd>
+
+        <br>
+        <dt>
+            Subota
+        <dt>
+        <dd>
+            @ViewBag.sub
+        </dd>
+
+        <br>
+        <dt>
+            Nedjelja
+        <dt>
+        <dd>
+            @ViewBag.ned
+        </dd>
+
+        </br></h4>
+    </dl>
+</div>
+

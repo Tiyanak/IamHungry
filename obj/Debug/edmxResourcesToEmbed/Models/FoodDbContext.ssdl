@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GladnoDijeteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DnevniMeni">
+    <Key>
+      <PropertyRef Name="MeniId" />
+      <PropertyRef Name="JelaId" />
+      <PropertyRef Name="dan" />
+    </Key>
+    <Property Name="MeniId" Type="int" Nullable="false" />
+    <Property Name="JelaId" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="cijena" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="dan" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="ImeJela" Type="char" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Dostava">
+    <Key>
+      <PropertyRef Name="RestId" />
+      <PropertyRef Name="KvartId" />
+    </Key>
+    <Property Name="RestId" Type="int" Nullable="false" />
+    <Property Name="KvartId" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="vrijeme" Type="int" />
+  </EntityType>
+  <EntityType Name="Grad">
+    <Key>
+      <PropertyRef Name="PostBroj" />
+    </Key>
+    <Property Name="PostBroj" Type="int" Nullable="false" />
+    <Property Name="ImeGrada" Type="char" MaxLength="30" Nullable="false" />
+    <Property Name="ZupId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kvart">
+    <Key>
+      <PropertyRef Name="KvartId" />
+    </Key>
+    <Property Name="KvartId" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="PostBroj" Type="int" Nullable="false" />
+    <Property Name="ImeKvarta" Type="char" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Meni">
+    <Key>
+      <PropertyRef Name="MeniId" />
+      <PropertyRef Name="JelaId" />
+    </Key>
+    <Property Name="MeniId" Type="int" Nullable="false" />
+    <Property Name="JelaId" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="cijena" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="ImeJela" Type="char" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Narudba">
+    <Key>
+      <PropertyRef Name="NarId" />
+    </Key>
+    <Property Name="NarId" Type="int" Nullable="false" />
+    <Property Name="ImeNarucitelja" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="PrezimeNarucitelja" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="ZupId" Type="int" />
+    <Property Name="PostBroj" Type="int" />
+    <Property Name="KvartId" Type="char" MaxLength="20" />
+    <Property Name="UlicaId" Type="char" MaxLength="20" />
+    <Property Name="KucniBroj" Type="int" Nullable="false" />
+    <Property Name="RestId" Type="int" />
+    <Property Name="JelaId" Type="char" MaxLength="20" />
+    <Property Name="email" Type="char" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RadnoVrijeme">
+    <Key>
+      <PropertyRef Name="RestId" />
+      <PropertyRef Name="Dan" />
+    </Key>
+    <Property Name="RestId" Type="int" Nullable="false" />
+    <Property Name="Dan" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="VrijemeOd" Type="time" Precision="7" />
+    <Property Name="VrijemeDo" Type="time" Precision="7" />
+    <Property Name="StatusRada" Type="char" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="RestId" />
+    </Key>
+    <Property Name="RestId" Type="int" Nullable="false" />
+    <Property Name="jedna" Type="int" />
+    <Property Name="dvije" Type="int" />
+    <Property Name="tri" Type="int" />
+    <Property Name="cetiri" Type="int" />
+    <Property Name="pet" Type="int" />
+  </EntityType>
+  <EntityType Name="Restoran">
+    <Key>
+      <PropertyRef Name="RestId" />
+    </Key>
+    <Property Name="RestId" Type="int" Nullable="false" />
+    <Property Name="ImeRest" Type="char" MaxLength="40" Nullable="false" />
+    <Property Name="PostBroj" Type="int" Nullable="false" />
+    <Property Name="Ulica" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="KvartId" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="MeniId" Type="int" Nullable="false" />
+    <Property Name="email" Type="char" MaxLength="50" Nullable="false" />
+    <Property Name="Passw" Type="char" MaxLength="50" Nullable="false" />
+    <Property Name="KucniBroj" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Ulica">
+    <Key>
+      <PropertyRef Name="UlicaId" />
+    </Key>
+    <Property Name="UlicaId" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="ImeUlice" Type="char" MaxLength="50" Nullable="false" />
+    <Property Name="PostBroj" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vlasnik">
+    <Key>
+      <PropertyRef Name="VlasnikId" />
+    </Key>
+    <Property Name="VlasnikId" Type="int" Nullable="false" />
+    <Property Name="ImeVlasnika" Type="char" MaxLength="20" />
+    <Property Name="PrezimeVlasnika" Type="char" MaxLength="20" />
+    <Property Name="RestId" Type="int" />
+  </EntityType>
+  <EntityType Name="Zupanija">
+    <Key>
+      <PropertyRef Name="ZupId" />
+    </Key>
+    <Property Name="ZupId" Type="int" Nullable="false" />
+    <Property Name="ZupIme" Type="char" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_dost_kvart">
+    <End Role="Kvart" Type="Self.Kvart" Multiplicity="1" />
+    <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kvart">
+        <PropertyRef Name="KvartId" />
+      </Principal>
+      <Dependent Role="Dostava">
+        <PropertyRef Name="KvartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_grad">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+    <End Role="Ulica" Type="Self.Ulica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grad">
+        <PropertyRef Name="PostBroj" />
+      </Principal>
+      <Dependent Role="Ulica">
+        <PropertyRef Name="PostBroj" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_grad_kvart">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+    <End Role="Kvart" Type="Self.Kvart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grad">
+        <PropertyRef Name="PostBroj" />
+      </Principal>
+      <Dependent Role="Kvart">
+        <PropertyRef Name="PostBroj" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_grad_nar">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="0..1" />
+    <End Role="Narudba" Type="Self.Narudba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grad">
+        <PropertyRef Name="PostBroj" />
+      </Principal>
+      <Dependent Role="Narudba">
+        <PropertyRef Name="PostBroj" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_kvart_rest">
+    <End Role="Kvart" Type="Self.Kvart" Multiplicity="1" />
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kvart">
+        <PropertyRef Name="KvartId" />
+      </Principal>
+      <Dependent Role="Restoran">
+        <PropertyRef Name="KvartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_rest_grad">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grad">
+        <PropertyRef Name="PostBroj" />
+      </Principal>
+      <Dependent Role="Restoran">
+        <PropertyRef Name="PostBroj" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_rest_nar">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+    <End Role="Narudba" Type="Self.Narudba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restoran">
+        <PropertyRef Name="RestId" />
+      </Principal>
+      <Dependent Role="Narudba">
+        <PropertyRef Name="RestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ulica_nar">
+    <End Role="Ulica" Type="Self.Ulica" Multiplicity="0..1" />
+    <End Role="Narudba" Type="Self.Narudba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ulica">
+        <PropertyRef Name="UlicaId" />
+      </Principal>
+      <Dependent Role="Narudba">
+        <PropertyRef Name="UlicaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_vlasnik_rest">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+    <End Role="Vlasnik" Type="Self.Vlasnik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restoran">
+        <PropertyRef Name="RestId" />
+      </Principal>
+      <Dependent Role="Vlasnik">
+        <PropertyRef Name="RestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_zup_nar">
+    <End Role="Zupanija" Type="Self.Zupanija" Multiplicity="0..1" />
+    <End Role="Narudba" Type="Self.Narudba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zupanija">
+        <PropertyRef Name="ZupId" />
+      </Principal>
+      <Dependent Role="Narudba">
+        <PropertyRef Name="ZupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_zupanija">
+    <End Role="Zupanija" Type="Self.Zupanija" Multiplicity="1" />
+    <End Role="Grad" Type="Self.Grad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zupanija">
+        <PropertyRef Name="ZupId" />
+      </Principal>
+      <Dependent Role="Grad">
+        <PropertyRef Name="ZupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GladnoDijeteModelStoreContainer">
+    <EntitySet Name="DnevniMeni" EntityType="Self.DnevniMeni" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dostava" EntityType="Self.Dostava" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grad" EntityType="Self.Grad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kvart" EntityType="Self.Kvart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Meni" EntityType="Self.Meni" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Narudba" EntityType="Self.Narudba" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RadnoVrijeme" EntityType="Self.RadnoVrijeme" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Restoran" EntityType="Self.Restoran" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ulica" EntityType="Self.Ulica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vlasnik" EntityType="Self.Vlasnik" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zupanija" EntityType="Self.Zupanija" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_dost_kvart" Association="Self.fk_dost_kvart">
+      <End Role="Kvart" EntitySet="Kvart" />
+      <End Role="Dostava" EntitySet="Dostava" />
+    </AssociationSet>
+    <AssociationSet Name="fk_grad" Association="Self.fk_grad">
+      <End Role="Grad" EntitySet="Grad" />
+      <End Role="Ulica" EntitySet="Ulica" />
+    </AssociationSet>
+    <AssociationSet Name="fk_grad_kvart" Association="Self.fk_grad_kvart">
+      <End Role="Grad" EntitySet="Grad" />
+      <End Role="Kvart" EntitySet="Kvart" />
+    </AssociationSet>
+    <AssociationSet Name="fk_grad_nar" Association="Self.fk_grad_nar">
+      <End Role="Grad" EntitySet="Grad" />
+      <End Role="Narudba" EntitySet="Narudba" />
+    </AssociationSet>
+    <AssociationSet Name="fk_kvart_rest" Association="Self.fk_kvart_rest">
+      <End Role="Kvart" EntitySet="Kvart" />
+      <End Role="Restoran" EntitySet="Restoran" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rest_grad" Association="Self.fk_rest_grad">
+      <End Role="Grad" EntitySet="Grad" />
+      <End Role="Restoran" EntitySet="Restoran" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rest_nar" Association="Self.fk_rest_nar">
+      <End Role="Restoran" EntitySet="Restoran" />
+      <End Role="Narudba" EntitySet="Narudba" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ulica_nar" Association="Self.fk_ulica_nar">
+      <End Role="Ulica" EntitySet="Ulica" />
+      <End Role="Narudba" EntitySet="Narudba" />
+    </AssociationSet>
+    <AssociationSet Name="fk_vlasnik_rest" Association="Self.fk_vlasnik_rest">
+      <End Role="Restoran" EntitySet="Restoran" />
+      <End Role="Vlasnik" EntitySet="Vlasnik" />
+    </AssociationSet>
+    <AssociationSet Name="fk_zup_nar" Association="Self.fk_zup_nar">
+      <End Role="Zupanija" EntitySet="Zupanija" />
+      <End Role="Narudba" EntitySet="Narudba" />
+    </AssociationSet>
+    <AssociationSet Name="fk_zupanija" Association="Self.fk_zupanija">
+      <End Role="Zupanija" EntitySet="Zupanija" />
+      <End Role="Grad" EntitySet="Grad" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
