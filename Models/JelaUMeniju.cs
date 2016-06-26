@@ -11,13 +11,16 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Meni
+    using System.ComponentModel.DataAnnotations;
+    public partial class JelaUMeniju
     {
-        public string MeniId { get; set; }
-        public string JelaId { get; set; }
+        public string RestId { get; set; }
+        public string JeloId { get; set; }
+        [Required(ErrorMessage = "Upišite cijenu jela!")]
         public Nullable<decimal> cijena { get; set; }
+        [Required(ErrorMessage = "Upišite ime jela!")]
         public string ImeJela { get; set; }
+        [Required(ErrorMessage = "Upišite opis jela!")]
         public string OpisJela { get; set; }
     
         public virtual Restoran Restoran { get; set; }

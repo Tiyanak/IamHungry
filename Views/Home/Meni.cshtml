@@ -1,5 +1,5 @@
-﻿@model IEnumerable<IamHungry.Models.Meni>
-
+﻿@model IEnumerable<IamHungry.Models.JelaUMeniju>
+<br><br><br>
 <h2>
     @ViewBag.ImeTrenRestorana
 </h2>
@@ -22,7 +22,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>          
-          <h4><b>@Html.DisplayFor(modelItem => item.ImeJela)</b> </h4>  <br>
+        <b>@Html.DisplayFor(modelItem => item.ImeJela)</b>   <br>
            @Html.DisplayFor(modelItem => item.OpisJela)
             
         </td>
@@ -30,7 +30,7 @@
            <h4> <b>@Html.DisplayFor(modelItem => item.cijena)</b></h4>
         </td>
         <td>
-            @Html.ActionLink("Naruci", "NarudbaMeni",  new { idM=item.MeniId, idJ=item.ImeJela, cijenaJ=item.cijena })
+            @Html.ActionLink("Naruči", "NarudbaMeni",  new { idM=item.RestId, idJ=item.ImeJela, cijenaJ=item.cijena })
         </td>
        
     </tr>
@@ -38,3 +38,5 @@
 }
 
 </table>
+<br>
+@Html.ActionLink("Povratak", "Index")

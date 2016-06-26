@@ -3,6 +3,17 @@
     padding-bottom: 20px;
 }
 
+body{
+	background-image: url('/Content/images/dada.jpg');
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-color: #ff3232;
+	background-attachment: fixed;
+		font-family: sans-serif;
+		color: black;
+	height: 100%;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -21,4 +32,12 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.container{
+	background-color: white
+}
+
+.jumbotron{
+	background-color: #ff9898 
 }

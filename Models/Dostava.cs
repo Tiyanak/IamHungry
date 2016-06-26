@@ -11,17 +11,18 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Dostava
     {
+        public string DostavaId { get; set; }
         public string RestId { get; set; }
         public string KvartId { get; set; }
-        public int PostBroj { get; set; }
+        public Nullable<int> PostBroj { get; set; }
+        [Required(ErrorMessage = "Upišite pretpostavku vremena dostave u minutama!")]
         public Nullable<int> vrijeme { get; set; }
     
-        public virtual Grad Grad { get; set; }
         public virtual Kvart Kvart { get; set; }
-        public virtual Kvart Kvart1 { get; set; }
         public virtual Restoran Restoran { get; set; }
+        public virtual Grad Grad { get; set; }
     }
 }

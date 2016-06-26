@@ -25,12 +25,12 @@ namespace IamHungry.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DnevniMeni> DnevniMeni { get; set; }
         public virtual DbSet<Dostava> Dostava { get; set; }
         public virtual DbSet<Grad> Grad { get; set; }
+        public virtual DbSet<JelaUDnevnomMeniju> JelaUDnevnomMeniju { get; set; }
+        public virtual DbSet<JelaUMeniju> JelaUMeniju { get; set; }
         public virtual DbSet<Kvart> Kvart { get; set; }
-        public virtual DbSet<Meni> Meni { get; set; }
-        public virtual DbSet<Narudba> Narudba { get; set; }
+        public virtual DbSet<Narudzba> Narudzba { get; set; }
         public virtual DbSet<RadnoVrijeme> RadnoVrijeme { get; set; }
         public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<Restoran> Restoran { get; set; }

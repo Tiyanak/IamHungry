@@ -20,6 +20,7 @@ namespace IamHungry.Models
         public Nullable<int> tri { get; set; }
         public Nullable<int> cetiri { get; set; }
         public Nullable<int> pet { get; set; }
+        public Nullable<double> ocjena { get; set; }
     
         public virtual Restoran Restoran { get; set; }
     }

@@ -1,10 +1,10 @@
 ﻿@model IamHungry.Models.RadnoVrijeme
-
+<br><br><br>
 @if(ViewBag.RadnoVrijeme != null)
 {
-    <h4>
+    <h2>
         @ViewBag.RadnoVrijeme
-    </h4>
+    </h2>
 }
 
 @using (Html.BeginForm()) 
@@ -12,55 +12,15 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>RadnoVrijeme</h4>
+        <h2>Radno Vrijeme</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Dan, "Dan", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.dan, "Dan", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @{
-                    List<SelectListItem> listItems = new List<SelectListItem>();
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Ponedjeljak",
-                        Value = "Ponedjeljak",
-                        Selected = true
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Utorak",
-                        Value = "Utorak"
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Srijeda",
-                        Value = "Srijeda"
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Cetvrtak",
-                        Value = "Cetvrtak"
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Petak",
-                        Value = "Petak"
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Subota",
-                        Value = "Subota"
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Nedjelja",
-                        Value = "Nedjelja"
-                    });
-                }
-
-                @Html.DropDownListFor(model => model.Dan, listItems, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Dan, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.dan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dan, "", new { @class = "text-danger" })
             </div>
         </div>
 

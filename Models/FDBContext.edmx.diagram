@@ -4,33 +4,32 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c007812be6b84c2c8f5930d4a659c7cd" Name="Diagram1">
-        <EntityTypeShape EntityType="GladnoDijeteModel.DnevniMeni" Width="1.5" PointX="12.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Dostava" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Grad" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Kvart" Width="1.5" PointX="5.25" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Meni" Width="1.5" PointX="12.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Narudba" Width="1.5" PointX="12.75" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.RadnoVrijeme" Width="1.5" PointX="12.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Rating" Width="1.5" PointX="8.25" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Restoran" Width="1.5" PointX="10.5" PointY="10.5" IsExpanded="true" />
+      <Diagram DiagramId="fe67f2e76b4a440da49b24114e0dbd83" Name="Diagram1">
+        <EntityTypeShape EntityType="GladnoDijeteModel.Dostava" Width="1.5" PointX="7.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Grad" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.JelaUDnevnomMeniju" Width="1.5" PointX="12.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.JelaUMeniju" Width="1.5" PointX="12.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Kvart" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Narudzba" Width="1.5" PointX="12.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.RadnoVrijeme" Width="1.5" PointX="12.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Rating" Width="1.5" PointX="12.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Restoran" Width="1.5" PointX="10.5" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GladnoDijeteModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Vlasnik" Width="1.5" PointX="12.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GladnoDijeteModel.Zupanija" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_DnevniMeni_Restoran2" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_Dostava_Grad2" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.FK_Dostava_Kvart" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_Dostava_Kvart2" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.FK_Dostava_Restoran" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_Kvart_Grad2" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_Restoran_Grad2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Vlasnik" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GladnoDijeteModel.Zupanija" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_dostava_kvart" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_dostava_restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_dostva_grad" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_kvart_grad" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_restoran_grad" ManuallyRouted="false" />
         <AssociationConnector Association="GladnoDijeteModel.fk_zupanija" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_Restoran_Kvart3" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.fk_Meni_Restoran2" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.FK_Narudba_Restoran" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.FK_RadnoVrijeme_Restoran" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.FK_Restoran_Rating" ManuallyRouted="false" />
-        <AssociationConnector Association="GladnoDijeteModel.FK_Vlasnik_Restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_jelaudnevnommeniju_restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_jelaumeniju_restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_restoran_kvart" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_narudzba_restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_radnovrijeme_restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_rating_restoran" ManuallyRouted="false" />
+        <AssociationConnector Association="GladnoDijeteModel.fk_restoran_vlasnik" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

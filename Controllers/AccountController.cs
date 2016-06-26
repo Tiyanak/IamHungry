@@ -5,14 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using IamHungry.Models;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace IamHungry.Controllers
 {
     public class AccountController : Controller
     {
         FDBContext fdb = new FDBContext();
+        [HttpGet]
         public ActionResult RegisterRestorana()
         {
+            if(Session["RestReg"] != null)
+            {
+                ViewBag.RestoranExist = Session["RestReg"].ToString();
+                Session["RestReg"] = null;
+            }
             GradDropDownList();
             KvardDropDownList();
             return View();
@@ -21,8 +28,12 @@ namespace IamHungry.Controllers
         [HttpPost]
         public ActionResult RegisterRestorana(Restoran restoran)
         {
-            if (ModelState.IsValid)
+            restoran.VlasnikId = Session["VlasnikId"].ToString();
+
+
+            if (ModelState.IsValidField("RestId") && ModelState.IsValidField("ImeRest") && ModelState.IsValidField("Ulica") && ModelState.IsValidField("email") && ModelState.IsValidField("Passw"))
             {
+
                 Restoran r = new Restoran();
                 r.RestId = restoran.RestId;
                 r.ImeRest = restoran.ImeRest;
@@ -34,7 +45,9 @@ namespace IamHungry.Controllers
                 r.Telefon = restoran.Telefon;
                 r.Mobitel = restoran.Mobitel;
                 r.KvartId = restoran.KvartId;
-                r.MeniId = restoran.RestId;
+                r.VlasnikId = restoran.VlasnikId;
+
+                Session["VlasnikId"] = null;
 
                 Rating rat = new Rating();
                 rat.RestId = restoran.RestId;
@@ -43,51 +56,47 @@ namespace IamHungry.Controllers
                 rat.tri = 0;
                 rat.cetiri = 0;
                 rat.pet = 0;
+                rat.ocjena = 1.0;
 
-                List<string> dani = new List<string>(){ "Ponedjeljak", "Utorak", "Srijeda", "Cetvrtak", "Petak", "Subota", "Nedjelja" };
-                
-                foreach(string s in dani)
-                {
-                    RadnoVrijeme rv = new RadnoVrijeme();
-                    rv.RestId = restoran.RestId;
-                    rv.StatusRada = "Ne radimo";
-                    rv.Dan = s;
-                    fdb.RadnoVrijeme.Add(rv);
-                }
-
-                
+               
                 fdb.Restoran.Add(r);
                 fdb.Rating.Add(rat);
                 fdb.SaveChangesAsync();
-                return RedirectToAction("RegisterVlasnika");
+                Session["VlasnikId"] = null;
+                Session["RestReg"] = "Uspješno ste registrirali restoran " + restoran.ImeRest.ToString();
+                return RedirectToAction("RegisterRestorana");
             }
             ModelState.Clear();
 
+            var v = fdb.Vlasnik.Find(Session["VlasnikId"].ToString());
+            fdb.Vlasnik.Remove(v);
+            fdb.SaveChanges();
+            Session["VlasnikId"] = null;
             ViewBag.restMessage = "Krivo ste unijeli podatke.";
-            return View();
+            return RedirectToAction("RegisterRestorana");
         }
 
         public ActionResult RegisterVlasnika()
         {
+
             return View();
         }
 
         [HttpPost]
         public ActionResult RegisterVlasnika(Vlasnik vlasnik)
         {
+
             if (ModelState.IsValid)
             {
-                if (fdb.Restoran.Single(u => u.RestId == vlasnik.RestId) != null)
-                {
-                    fdb.Vlasnik.Add(vlasnik);
-                    fdb.SaveChangesAsync();
-                    ViewBag.VlasMessage = "Uspješno ste registrirali svoj restoran.";
-                    return View();
-                }
-
-                ViewBag.FailMessage = "Ne postoji restoran sa navedenim OIB-om!";
-                ModelState.Clear();
+                Session["VlasnikId"] = vlasnik.VlasnikId.ToString();
+                fdb.Vlasnik.Add(vlasnik);
+                fdb.SaveChanges();
+               
+                return RedirectToAction("RegisterRestorana");
             }
+
+            ModelState.Clear();
+            
             return View();
         }
 
@@ -101,20 +110,23 @@ namespace IamHungry.Controllers
         [HttpPost]
         public ActionResult Login(Restoran user)
         {
-        
-            if(fdb.Restoran.Single(u => u.ImeRest == user.ImeRest && u.Passw == user.Passw) != null)
+           
+            using(FDBContext fdb2 = new FDBContext())
             {
-                var usr = fdb.Restoran.Single(u => u.ImeRest == user.ImeRest && u.Passw == user.Passw);
-                Session["UserId"] = usr.RestId.ToString();
-                Session["Username"] = usr.ImeRest.ToString();
-                return RedirectToAction("Index", "Home");
+                var usr = fdb2.Restoran.SingleOrDefault(u => u.ImeRest == user.ImeRest && u.Passw == user.Passw);
+                if(usr != null)
+                {
+                    Session["UserId"] = usr.RestId.ToString();
+                    Session["Username"] = usr.ImeRest.ToString();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Korisničko ime ili lozinka su pogrešni!");
+                }
             }
-            else
-            {
-                ModelState.AddModelError("", "Korisnicko ime ili password je pogresno unesen.");
-            }
-            
-            return View("/Home/Index");
+            return View();
+           
         }
 
         // GET: /Account/LoggedIn

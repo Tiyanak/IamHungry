@@ -1,15 +1,18 @@
 ﻿@model IEnumerable<IamHungry.Models.Restoran>
-
+<br><br><br>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ImeRest)
+            Ime restorana
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Grad.ImeGrada)
+            Grad
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Kvart.ImeKvarta)
+            Kvart
+        </th>
+        <th>
+            Ocijena
         </th>
         <th></th>
     </tr>
@@ -25,9 +28,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Kvart.ImeKvarta)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating.ocjena)
+        </td>
        
         <td>
-            @Html.ActionLink("Pogledaj meni", "Meni", new { idMenija = item.MeniId } )  |
+            @Html.ActionLink("Pogledaj meni", "Meni", new { idMenija = item.RestId } )  |
             @Html.ActionLink("Pogledaj dnevni meni", "DnevniMeni", new { idMenija = item.RestId }) |
             @Html.ActionLink("Informacije", "RestInfo", new { idMenija = item.RestId})
         </td>

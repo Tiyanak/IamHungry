@@ -1,11 +1,29 @@
 ﻿@model IamHungry.Models.Restoran
 
+<br><br><br>
+<h2>Registracija restorana</h2>
+
+@if(ViewBag.RestoranExist != null)
+{
+    <h3>@ViewBag.RestoranExist</h3>
+}
+@if(ViewBag.VlasnikNotExist != null)
+{
+    <h3>@ViewBag.VlasnikNotExist</h3>
+}
+@if(ViewBag.restMessage != null)
+{
+    <h3>
+        @ViewBag.restMessage
+    </h3>
+}
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h2>Registracija restorana</h2>
+       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -25,10 +43,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PostBroj, "Grad", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Grad, "Grad", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("PostBroj", (SelectList)ViewBag.Grad, htmlAttributes: new { @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.ImeRest, "", new { @class = "text-danger" })
+                @Html.DropDownList("PostBroj", (SelectList)ViewBag.Grad, htmlAttributes: new { @class = "form-control" })
             </div>
         </div>
 
@@ -36,7 +53,6 @@
             @Html.LabelFor(model => model.KvartId, "Kvart", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("KvartId", (SelectList)ViewBag.Kvart, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ImeRest, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -66,7 +82,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.KucniBroj, "Kucni broj", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.KucniBroj, "Kućni broj", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.KucniBroj, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.KucniBroj, "", new { @class = "text-danger" })
@@ -89,7 +105,6 @@
             </div>
         </div>
 
-        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -100,7 +115,7 @@
 }
 
 <div>
-    @Html.ActionLink("Povratak na pocetnu", "Index", "Home")|
+    @Html.ActionLink("Povratak", "Index", "Home")|
     @Html.ActionLink("Unesi novi grad", "NoviGrad", "Lokacija")|
     @Html.ActionLink("Unesi novi kvart", "NoviKvart", "Lokacija")
 </div>

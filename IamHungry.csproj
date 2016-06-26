@@ -205,9 +205,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DnevniMeni.cs">
-      <DependentUpon>FDBContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Dostava.cs">
       <DependentUpon>FDBContext.tt</DependentUpon>
     </Compile>
@@ -230,13 +227,16 @@
       <DependentUpon>FDBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JelaUDnevnomMeniju.cs">
+      <DependentUpon>FDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JelaUMeniju.cs">
+      <DependentUpon>FDBContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Kvart.cs">
       <DependentUpon>FDBContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Meni.cs">
-      <DependentUpon>FDBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Narudba.cs">
+    <Compile Include="Models\Narudzba.cs">
       <DependentUpon>FDBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RadnoVrijeme.cs">
@@ -245,6 +245,7 @@
     <Compile Include="Models\Rating.cs">
       <DependentUpon>FDBContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RequredAttribute.cs" />
     <Compile Include="Models\Restoran.cs">
       <DependentUpon>FDBContext.tt</DependentUpon>
     </Compile>
@@ -263,6 +264,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\dada.svg" />
+    <Content Include="Content\images\poz.jpg" />
+    <Content Include="Content\images\poz2.jpg" />
+    <Content Include="Content\images\poz3.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -341,6 +346,8 @@
     <Content Include="Views\Restoran\UrediDostavu.cshtml" />
     <Content Include="Views\Restoran\DodajDostavu.cshtml" />
     <Content Include="Views\Restoran\IzmijeniDostavu.cshtml" />
+    <Content Include="Views\Home\NarudbaDnevniMeni.cshtml" />
+    <Content Include="Views\Home\NarudbaPoslano.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

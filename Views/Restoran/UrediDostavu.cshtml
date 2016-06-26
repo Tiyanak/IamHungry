@@ -1,13 +1,18 @@
 ﻿@model IEnumerable<IamHungry.Models.Dostava>
-
+<br><br><br>
 <h3>
     @Session["UserName"]
 </h3>
+<br>
 <p>
     @Html.ActionLink("Dodaj kvart dostave", "DodajDostavu")
 </p>
+<br>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayName("Grad")
+        </th>
         <th>
             @Html.DisplayName("Kvart")
         </th>
@@ -22,6 +27,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Grad.ImeGrada)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Kvart.ImeKvarta)
         </td>
         <td>
@@ -30,8 +38,8 @@
 
 
         <td>
-            @Html.ActionLink("Izmijeni", "IzmijeniDostavu", new { idR = item.RestId, idK = item.KvartId, idG = item.PostBroj }) |
-            @Html.ActionLink("Izbrisi", "IzbrisiDostavu", new { idR = item.RestId, idK = item.KvartId, idG = item.PostBroj })
+            @Html.ActionLink("Izmijeni", "IzmijeniDostavu", new { idD = item.DostavaId }) |
+            @Html.ActionLink("Izbrisi", "IzbrisiDostavu", new { idD = item.DostavaId })
         </td>
     </tr>
 }

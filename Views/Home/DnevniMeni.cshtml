@@ -1,13 +1,13 @@
-﻿@model IEnumerable<IamHungry.Models.DnevniMeni>
+﻿@model IEnumerable<IamHungry.Models.JelaUDnevnomMeniju>
 
-
+<br><br><br>
 <table class="table">
     <tr>
         <th>
            Ime jela
         </th>
         <th>
-            Dan u tjednu
+            Datum
         </th>
         <th>
             Cijena
@@ -18,17 +18,17 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <h4><b>@Html.DisplayFor(modelItem => item.ImeJela)</b> </h4>  <br>
+            <b>@Html.DisplayFor(modelItem => item.ImeJela)</b>   <br>
             @Html.DisplayFor(modelItem => item.OpisJela)
         </td>
         <td>
             <h4><b> @Html.DisplayFor(modelItem => item.dan)</b> </h4>
         </td>
         <td>
-            <h4><b> @Html.DisplayFor(modelItem => item.cijena)</b> </h4>
+            <h4><b> @Html.DisplayFor(modelItem => item.cjena)</b> </h4>
         </td>
         <td>
-            @Html.ActionLink("Naruci", "NarudbaMeni", new { idM = item.MeniId, idJ = item.ImeJela, cijenaJ = item.cijena })
+            @Html.ActionLink("Naruci", "NarudbaDnevniMeni", new { idDJ = item.RestDnevnoJeloId })
            
         </td>
     </tr>
@@ -36,3 +36,4 @@
 }
 
 </table>
+@Html.ActionLink("Povratak", "Index")

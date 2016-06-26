@@ -11,14 +11,19 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class DnevniMeni
+    using System.ComponentModel.DataAnnotations;
+    public partial class JelaUDnevnomMeniju
     {
-        public string MeniId { get; set; }
-        public string JelaId { get; set; }
-        public string dan { get; set; }
-        public Nullable<decimal> cijena { get; set; }
+        public string RestDnevnoJeloId { get; set; }
+        public string RestId { get; set; }
+        [Required(ErrorMessage = "Upišite datum dostave")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> dan { get; set; }
+        [Required(ErrorMessage = "Upišite cijenu jela!")]
+        public Nullable<decimal> cjena { get; set; }
+        [Required(ErrorMessage = "Upišite ime jela!")]
         public string ImeJela { get; set; }
+        [Required(ErrorMessage = "Upišite opis jela!")]
         public string OpisJela { get; set; }
     
         public virtual Restoran Restoran { get; set; }

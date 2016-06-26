@@ -77,6 +77,6 @@ D:\Projects\ASP.NET Projects\IamHungry\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Projects\ASP.NET Projects\IamHungry\bin\Microsoft.Owin.Security.Google.xml
 D:\Projects\ASP.NET Projects\IamHungry\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Projects\ASP.NET Projects\IamHungry\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\Projects\ASP.NET Projects\IamHungry\obj\Debug\IamHungry.csprojResolveAssemblyReference.cache
 D:\Projects\ASP.NET Projects\IamHungry\obj\Debug\IamHungry.dll
 D:\Projects\ASP.NET Projects\IamHungry\obj\Debug\IamHungry.pdb
+D:\Projects\ASP.NET Projects\IamHungry\obj\Debug\IamHungry.csprojResolveAssemblyReference.cache

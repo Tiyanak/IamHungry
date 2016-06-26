@@ -1,21 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GladnoDijeteModelStoreContainer" CdmEntityContainer="FDBContext">
-    <EntitySetMapping Name="DnevniMeni">
-      <EntityTypeMapping TypeName="GladnoDijeteModel.DnevniMeni">
-        <MappingFragment StoreEntitySet="DnevniMeni">
-          <ScalarProperty Name="MeniId" ColumnName="MeniId" />
-          <ScalarProperty Name="JelaId" ColumnName="JelaId" />
-          <ScalarProperty Name="dan" ColumnName="dan" />
-          <ScalarProperty Name="cijena" ColumnName="cijena" />
-          <ScalarProperty Name="ImeJela" ColumnName="ImeJela" />
-          <ScalarProperty Name="OpisJela" ColumnName="OpisJela" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Dostava">
       <EntityTypeMapping TypeName="GladnoDijeteModel.Dostava">
         <MappingFragment StoreEntitySet="Dostava">
+          <ScalarProperty Name="DostavaId" ColumnName="DostavaId" />
           <ScalarProperty Name="RestId" ColumnName="RestId" />
           <ScalarProperty Name="KvartId" ColumnName="KvartId" />
           <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
@@ -32,6 +21,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="JelaUDnevnomMeniju">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.JelaUDnevnomMeniju">
+        <MappingFragment StoreEntitySet="JelaUDnevnomMeniju">
+          <ScalarProperty Name="RestDnevnoJeloId" ColumnName="RestDnevnoJeloId" />
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="dan" ColumnName="dan" />
+          <ScalarProperty Name="cjena" ColumnName="cjena" />
+          <ScalarProperty Name="ImeJela" ColumnName="ImeJela" />
+          <ScalarProperty Name="OpisJela" ColumnName="OpisJela" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JelaUMeniju">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.JelaUMeniju">
+        <MappingFragment StoreEntitySet="JelaUMeniju">
+          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="JeloId" ColumnName="JeloId" />
+          <ScalarProperty Name="cijena" ColumnName="cijena" />
+          <ScalarProperty Name="ImeJela" ColumnName="ImeJela" />
+          <ScalarProperty Name="OpisJela" ColumnName="OpisJela" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Kvart">
       <EntityTypeMapping TypeName="GladnoDijeteModel.Kvart">
         <MappingFragment StoreEntitySet="Kvart">
@@ -41,20 +53,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Meni">
-      <EntityTypeMapping TypeName="GladnoDijeteModel.Meni">
-        <MappingFragment StoreEntitySet="Meni">
-          <ScalarProperty Name="MeniId" ColumnName="MeniId" />
-          <ScalarProperty Name="JelaId" ColumnName="JelaId" />
-          <ScalarProperty Name="cijena" ColumnName="cijena" />
-          <ScalarProperty Name="ImeJela" ColumnName="ImeJela" />
-          <ScalarProperty Name="OpisJela" ColumnName="OpisJela" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Narudba">
-      <EntityTypeMapping TypeName="GladnoDijeteModel.Narudba">
-        <MappingFragment StoreEntitySet="Narudba">
+    <EntitySetMapping Name="Narudzba">
+      <EntityTypeMapping TypeName="GladnoDijeteModel.Narudzba">
+        <MappingFragment StoreEntitySet="Narudzba">
           <ScalarProperty Name="NarId" ColumnName="NarId" />
           <ScalarProperty Name="Ime" ColumnName="Ime" />
           <ScalarProperty Name="Prezime" ColumnName="Prezime" />
@@ -69,14 +70,16 @@
           <ScalarProperty Name="ImeJela" ColumnName="ImeJela" />
           <ScalarProperty Name="cijena" ColumnName="cijena" />
           <ScalarProperty Name="vrijeme" ColumnName="vrijeme" />
+          <ScalarProperty Name="kolicina" ColumnName="kolicina" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RadnoVrijeme">
       <EntityTypeMapping TypeName="GladnoDijeteModel.RadnoVrijeme">
         <MappingFragment StoreEntitySet="RadnoVrijeme">
+          <ScalarProperty Name="RestRadId" ColumnName="RestRadId" />
+          <ScalarProperty Name="dan" ColumnName="dan" />
           <ScalarProperty Name="RestId" ColumnName="RestId" />
-          <ScalarProperty Name="Dan" ColumnName="Dan" />
           <ScalarProperty Name="VrijemeOd" ColumnName="VrijemeOd" />
           <ScalarProperty Name="VrijemeDo" ColumnName="VrijemeDo" />
           <ScalarProperty Name="StatusRada" ColumnName="StatusRada" />
@@ -92,6 +95,7 @@
           <ScalarProperty Name="tri" ColumnName="tri" />
           <ScalarProperty Name="cetiri" ColumnName="cetiri" />
           <ScalarProperty Name="pet" ColumnName="pet" />
+          <ScalarProperty Name="ocjena" ColumnName="ocjena" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -103,12 +107,12 @@
           <ScalarProperty Name="PostBroj" ColumnName="PostBroj" />
           <ScalarProperty Name="Ulica" ColumnName="Ulica" />
           <ScalarProperty Name="KvartId" ColumnName="KvartId" />
-          <ScalarProperty Name="MeniId" ColumnName="MeniId" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="Passw" ColumnName="Passw" />
           <ScalarProperty Name="KucniBroj" ColumnName="KucniBroj" />
           <ScalarProperty Name="Telefon" ColumnName="Telefon" />
           <ScalarProperty Name="Mobitel" ColumnName="Mobitel" />
+          <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -129,7 +133,8 @@
           <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
           <ScalarProperty Name="ImeVlasnika" ColumnName="ImeVlasnika" />
           <ScalarProperty Name="PrezimeVlasnika" ColumnName="PrezimeVlasnika" />
-          <ScalarProperty Name="RestId" ColumnName="RestId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="telefon" ColumnName="telefon" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

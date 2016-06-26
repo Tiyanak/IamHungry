@@ -1,5 +1,5 @@
 ﻿@model IamHungry.Models.Dostava
-
+<br><br><br>
 <h4>Dostava</h4>
 <hr />
 
@@ -18,10 +18,22 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.RestId)
+        @Html.HiddenFor(model => model.DostavaId)
 
-        @Html.HiddenFor(model => model.KvartId)
 
-        @Html.HiddenFor(model => model.PostBroj)
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostBroj, "Grad", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PostBroj", (SelectList)ViewBag.GradD, htmlAttributes: new { @class = "form-control" } )
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KvartId, "Kvart", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("KvartId", (SelectList)ViewBag.KvartD, htmlAttributes: new { @class = "form-control" } )
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.vrijeme, "Vrijeme", htmlAttributes: new { @class = "control-label col-md-2" })

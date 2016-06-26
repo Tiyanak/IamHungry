@@ -11,12 +11,19 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class RadnoVrijeme
     {
+        public string RestRadId { get; set; }
+        [Required(ErrorMessage = "Upišite datum željenog radnog vremena.")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> dan { get; set; }
         public string RestId { get; set; }
-        public string Dan { get; set; }
+        [Required(ErrorMessage = "Upišite vrijeme u satima i minutama od kada æe raditi vaš restoran za zadani datum.")]
+        [DataType(DataType.Time)]
         public Nullable<System.TimeSpan> VrijemeOd { get; set; }
+        [Required(ErrorMessage = "Upišite vrijeme u satima i minutama do kada æe raditi vas restoran za zadani datum.")]
+        [DataType(DataType.Time)]
         public Nullable<System.TimeSpan> VrijemeDo { get; set; }
         public string StatusRada { get; set; }
     

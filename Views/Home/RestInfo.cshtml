@@ -1,5 +1,5 @@
 ﻿@model IamHungry.Models.Restoran
-
+<br><br><br>
 <div>
     <h2>@Html.DisplayFor(model => model.ImeRest)</h2>
     <hr />
@@ -30,7 +30,7 @@
         
         <br>
         <dt>
-            @Html.DisplayName("Kucni broj")
+            @Html.DisplayName("Kućni broj")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.KucniBroj)
@@ -46,7 +46,7 @@
         
         <br>
         <dt>
-            @Html.DisplayNameFor(model => model.Telefon)
+            @Html.DisplayName("Telefon")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Telefon)
@@ -54,7 +54,7 @@
        
         <br>
         <dt>
-            @Html.DisplayNameFor(model => model.Mobitel)
+            @Html.DisplayName("Mobitel")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Mobitel)
@@ -62,68 +62,14 @@
         
         <br>
         <dt>
-            @Html.DisplayName("Ocjena")
+            @Html.DisplayName("Ocijena")
         </dt>
         <dd>
-            @ViewBag.Rating
+            @Html.DisplayFor(model => model.Rating.ocjena)
         </dd>
 
-        <br>
-        <dt>
-            Ponedjeljak
-        <dt>
-        <dd>
-            @ViewBag.pon
-        </dd>
-        <br>
-        <dt>
-            Utorak
-        <dt>
-        <dd>
-            @ViewBag.uto
-        </dd>
-
-        <br>
-        <dt>
-            Srijeda
-        <dt>
-        <dd>
-            @ViewBag.sri
-        </dd>
-
-        <br>
-        <dt>
-            Četvrtak
-        <dt>
-        <dd>
-            @ViewBag.cet
-        </dd>
-
-        <br>
-        <dt>
-            Petak
-        <dt>
-        <dd>
-            @ViewBag.pet
-        </dd>
-
-        <br>
-        <dt>
-            Subota
-        <dt>
-        <dd>
-            @ViewBag.sub
-        </dd>
-
-        <br>
-        <dt>
-            Nedjelja
-        <dt>
-        <dd>
-            @ViewBag.ned
-        </dd>
+       
 
         </br></h4>
     </dl>
 </div>
-

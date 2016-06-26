@@ -21,22 +21,22 @@ namespace IamHungry.Controllers
         public ActionResult UrediMeni()
         {
             string rest = Session["UserId"].ToString();
-            var meni = from m in fdb.Meni where m.MeniId == rest select m;
+            var meni = from m in fdb.JelaUMeniju where m.RestId == rest select m;
             return View(meni);
         }
 
         public ActionResult IzmijeniMeni(string idM, string idJ)
         {
-            Meni meni = new Meni();
-            meni.MeniId = idM;
-            meni.JelaId = idJ;
+            JelaUMeniju meni = new JelaUMeniju();
+            meni.RestId = idM;
+            meni.JeloId = idJ;
             return View(meni);
         }
 
         [HttpPost]
-        public ActionResult IzmijeniMeni(Meni meni)
+        public ActionResult IzmijeniMeni(JelaUMeniju meni)
         {
-            var m = fdb.Meni.Find(meni.MeniId, meni.JelaId);
+            var m = fdb.JelaUMeniju.Find(meni.RestId, meni.JeloId);
             if (ModelState.IsValid)
             {
                 if (meni.cijena != null)
@@ -63,28 +63,27 @@ namespace IamHungry.Controllers
         public ActionResult UrediDnevniMeni()
         {
             string dm = Session["UserId"].ToString();
-            var dmeni = from m in fdb.DnevniMeni where m.MeniId == dm select m;
+            var dmeni = from m in fdb.JelaUDnevnomMeniju where m.RestId == dm select m;
             return View(dmeni);
         }
 
-        public ActionResult IzmijeniDnevniMeni(string idM, string idJ, string idD)
+        public ActionResult IzmijeniDnevniMeni(string idRDM)
         {
-            DnevniMeni dmeni = new DnevniMeni();
-            dmeni.MeniId = idM;
-            dmeni.JelaId = idJ;
-            dmeni.dan = idD;
+            JelaUDnevnomMeniju dmeni = new JelaUDnevnomMeniju();
+            var jelo = fdb.JelaUDnevnomMeniju.Find(idRDM);
+            dmeni.RestDnevnoJeloId = jelo.RestDnevnoJeloId.ToString();
             return View(dmeni);
         }
 
         [HttpPost]
-        public ActionResult IzmijeniDnevniMeni(DnevniMeni dm)
+        public ActionResult IzmijeniDnevniMeni(JelaUDnevnomMeniju dm)
         {
-            var dmeni = fdb.DnevniMeni.Find(dm.MeniId, dm.JelaId, dm.dan);
+            var dmeni = fdb.JelaUDnevnomMeniju.Find(dm.RestDnevnoJeloId);
             if (ModelState.IsValid)
             {
-                if(dm.cijena != null)
+                if(dm.cjena != null)
                 {
-                    dmeni.cijena = dm.cijena;
+                    dmeni.cjena = dm.cjena;
                 }
                 if(dm.dan != null)
                 {
@@ -106,33 +105,34 @@ namespace IamHungry.Controllers
             return View(dm);
         }
 
-        public ActionResult IzbrisiDnevniMeni(string idM, string idJ, string idD)
+        public ActionResult IzbrisiDnevniMeni(string idRDM)
         {
-            var dm = fdb.DnevniMeni.Find(idM, idJ, idD);
-            fdb.DnevniMeni.Remove(dm);
+            var dm = fdb.JelaUDnevnomMeniju.Find(idRDM);
+            fdb.JelaUDnevnomMeniju.Remove(dm);
             fdb.SaveChanges();
             return RedirectToAction("UrediDnevniMeni");
         }
 
         public ActionResult NovoMeniJelo()
         {
-            return View();
+            JelaUMeniju jelo = new JelaUMeniju();
+            return View(jelo);
         }
 
         [HttpPost]
-        public ActionResult NovoMeniJelo(Meni jelo)
+        public ActionResult NovoMeniJelo(JelaUMeniju jelo)
         {
             if(Session["UserId"] != null)
             {
-                jelo.MeniId = Session["UserId"].ToString();
+                jelo.RestId = Session["UserId"].ToString();
             }
             if (ModelState.IsValid)
             {
                 
                 Random rnd = new Random();
                 int r = rnd.Next(0, 9999);
-                jelo.JelaId = "" + jelo.ImeJela.Substring(0, 3) + "" + r.ToString();
-                fdb.Meni.Add(jelo);
+                jelo.JeloId = "" + jelo.ImeJela.Substring(0, 5) + "" + r.ToString();
+                fdb.JelaUMeniju.Add(jelo);
                 fdb.SaveChanges();
                 return RedirectToAction("UrediMeni", "Jela");
             }
@@ -141,30 +141,29 @@ namespace IamHungry.Controllers
 
         public ActionResult IzbrisiMeni(string idM, string idJ)
         {
-            var jelo = fdb.Meni.Find(idM, idJ);
-            fdb.Meni.Remove(jelo);
+            var jelo = fdb.JelaUMeniju.Find(idM, idJ);
+            fdb.JelaUMeniju.Remove(jelo);
             fdb.SaveChanges();
             return RedirectToAction("UrediMeni");
         }
 
         public ActionResult NovoDnevniMeniJelo()
         {
-            return View();
+            JelaUDnevnomMeniju jelo = new JelaUDnevnomMeniju();
+            return View(jelo);
         }
 
         [HttpPost]
-        public ActionResult NovoDnevniMeniJelo(DnevniMeni jelo)
+        public ActionResult NovoDnevniMeniJelo(JelaUDnevnomMeniju jelo)
         {
             if (Session["UserId"] != null)
             {
-                jelo.MeniId = Session["UserId"].ToString();
+                jelo.RestId = Session["UserId"].ToString();
+                jelo.RestDnevnoJeloId = jelo.RestId.Substring(0, 4).ToString() + jelo.dan.ToString() + jelo.ImeJela.Substring(0, 5).ToString();
             }
             if (ModelState.IsValid)
             {
-                Random rnd = new Random();
-                int r = rnd.Next(0, 9999);
-                jelo.JelaId = "" + jelo.ImeJela.Substring(0, 3) + "" + r.ToString();
-                fdb.DnevniMeni.Add(jelo);
+                fdb.JelaUDnevnomMeniju.Add(jelo);
                 fdb.SaveChanges();
                 return RedirectToAction("UrediDnevniMeni", "Jela");
             }
@@ -176,12 +175,12 @@ namespace IamHungry.Controllers
         private void MeniDropDownList(object selectedMeni = null)
         {
 
-            ViewBag.MeniJela = new SelectList(fdb.Meni, "JelaId", "ImeJela", selectedMeni);
+            ViewBag.MeniJela = new SelectList(fdb.JelaUMeniju, "JelaId", "ImeJela", selectedMeni);
         }
 
         private void DnevniMeniDropDownList(object selectedDnevniMeni = null)
         {
-            ViewBag.DnevniMeni = new SelectList(fdb.DnevniMeni, "JelaId", "ImeJela", selectedDnevniMeni);
+            ViewBag.DnevniMeni = new SelectList(fdb.JelaUDnevnomMeniju, "RestDnevnoJeloId", "ImeJela", selectedDnevniMeni);
         }
 
         private void DanDropDownList()

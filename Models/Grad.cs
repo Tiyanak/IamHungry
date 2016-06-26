@@ -11,7 +11,7 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Grad
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +21,7 @@ namespace IamHungry.Models
             this.Kvart = new HashSet<Kvart>();
             this.Restoran = new HashSet<Restoran>();
         }
-    
+       
         public int PostBroj { get; set; }
         public string ImeGrada { get; set; }
         public int ZupId { get; set; }

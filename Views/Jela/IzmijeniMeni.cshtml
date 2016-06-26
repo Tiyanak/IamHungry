@@ -1,5 +1,5 @@
-﻿@model IamHungry.Models.Meni
-
+﻿@model IamHungry.Models.JelaUMeniju
+<br><br><br>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -8,17 +8,11 @@
         <h3>Izmijena jela</h3>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MeniId)
+        @Html.HiddenFor(model => model.RestId)
 
-        @Html.HiddenFor(model => model.JelaId)
+        @Html.HiddenFor(model => model.JeloId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.cijena, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.cijena, "Cijena", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.cijena, "", new { @class = "text-danger" })
-            </div>
-        </div>
+       
 
         <div class="form-group">
             @Html.LabelFor(model => model.ImeJela, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,6 +27,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.OpisJela, "Opis jela", new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.OpisJela, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.cijena, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cijena, "Cijena", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cijena, "", new { @class = "text-danger" })
             </div>
         </div>
 

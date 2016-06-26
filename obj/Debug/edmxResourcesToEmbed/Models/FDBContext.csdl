@@ -1,33 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GladnoDijeteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="DnevniMeni">
-    <Key>
-      <PropertyRef Name="MeniId" />
-      <PropertyRef Name="JelaId" />
-      <PropertyRef Name="dan" />
-    </Key>
-    <Property Name="MeniId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="JelaId" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="dan" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="cijena" Type="Decimal" Precision="6" Scale="2" />
-    <Property Name="ImeJela" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="OpisJela" Type="String" MaxLength="1000" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="Restoran" Relationship="Self.fk_DnevniMeni_Restoran2" FromRole="DnevniMeni" ToRole="Restoran" />
-  </EntityType>
   <EntityType Name="Dostava">
     <Key>
-      <PropertyRef Name="RestId" />
-      <PropertyRef Name="KvartId" />
-      <PropertyRef Name="PostBroj" />
+      <PropertyRef Name="DostavaId" />
     </Key>
-    <Property Name="RestId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="KvartId" Type="String" MaxLength="200" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="PostBroj" Type="Int32" Nullable="false" />
+    <Property Name="DostavaId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="KvartId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="PostBroj" Type="Int32" />
     <Property Name="vrijeme" Type="Int32" />
-    <NavigationProperty Name="Grad" Relationship="Self.fk_Dostava_Grad2" FromRole="Dostava" ToRole="Grad" />
-    <NavigationProperty Name="Kvart" Relationship="Self.FK_Dostava_Kvart" FromRole="Dostava" ToRole="Kvart" />
-    <NavigationProperty Name="Kvart1" Relationship="Self.fk_Dostava_Kvart2" FromRole="Dostava" ToRole="Kvart" />
-    <NavigationProperty Name="Restoran" Relationship="Self.FK_Dostava_Restoran" FromRole="Dostava" ToRole="Restoran" />
+    <NavigationProperty Name="Kvart" Relationship="Self.fk_dostava_kvart" FromRole="Dostava" ToRole="Kvart" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_dostava_restoran" FromRole="Dostava" ToRole="Restoran" />
+    <NavigationProperty Name="Grad" Relationship="Self.fk_dostva_grad" FromRole="Dostava" ToRole="Grad" />
   </EntityType>
   <EntityType Name="Grad">
     <Key>
@@ -36,104 +20,116 @@
     <Property Name="PostBroj" Type="Int32" Nullable="false" />
     <Property Name="ImeGrada" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="ZupId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Dostava" Relationship="Self.fk_Dostava_Grad2" FromRole="Grad" ToRole="Dostava" />
-    <NavigationProperty Name="Kvart" Relationship="Self.fk_Kvart_Grad2" FromRole="Grad" ToRole="Kvart" />
-    <NavigationProperty Name="Restoran" Relationship="Self.fk_Restoran_Grad2" FromRole="Grad" ToRole="Restoran" />
+    <NavigationProperty Name="Dostava" Relationship="Self.fk_dostva_grad" FromRole="Grad" ToRole="Dostava" />
+    <NavigationProperty Name="Kvart" Relationship="Self.fk_kvart_grad" FromRole="Grad" ToRole="Kvart" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_restoran_grad" FromRole="Grad" ToRole="Restoran" />
     <NavigationProperty Name="Zupanija" Relationship="Self.fk_zupanija" FromRole="Grad" ToRole="Zupanija" />
+  </EntityType>
+  <EntityType Name="JelaUDnevnomMeniju">
+    <Key>
+      <PropertyRef Name="RestDnevnoJeloId" />
+    </Key>
+    <Property Name="RestDnevnoJeloId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="dan" Type="DateTime" Precision="0" />
+    <Property Name="cjena" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="ImeJela" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="OpisJela" Type="String" MaxLength="500" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_jelaudnevnommeniju_restoran" FromRole="JelaUDnevnomMeniju" ToRole="Restoran" />
+  </EntityType>
+  <EntityType Name="JelaUMeniju">
+    <Key>
+      <PropertyRef Name="RestId" />
+      <PropertyRef Name="JeloId" />
+    </Key>
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="JeloId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="cijena" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="ImeJela" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="OpisJela" Type="String" MaxLength="500" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_jelaumeniju_restoran" FromRole="JelaUMeniju" ToRole="Restoran" />
   </EntityType>
   <EntityType Name="Kvart">
     <Key>
       <PropertyRef Name="KvartId" />
-      <PropertyRef Name="PostBroj" />
     </Key>
-    <Property Name="KvartId" Type="String" MaxLength="200" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="PostBroj" Type="Int32" Nullable="false" />
+    <Property Name="KvartId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="PostBroj" Type="Int32" />
     <Property Name="ImeKvarta" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="Dostava" Relationship="Self.FK_Dostava_Kvart" FromRole="Kvart" ToRole="Dostava" />
-    <NavigationProperty Name="Dostava1" Relationship="Self.fk_Dostava_Kvart2" FromRole="Kvart" ToRole="Dostava" />
-    <NavigationProperty Name="Grad" Relationship="Self.fk_Kvart_Grad2" FromRole="Kvart" ToRole="Grad" />
-    <NavigationProperty Name="Restoran" Relationship="Self.fk_Restoran_Kvart3" FromRole="Kvart" ToRole="Restoran" />
+    <NavigationProperty Name="Dostava" Relationship="Self.fk_dostava_kvart" FromRole="Kvart" ToRole="Dostava" />
+    <NavigationProperty Name="Grad" Relationship="Self.fk_kvart_grad" FromRole="Kvart" ToRole="Grad" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_restoran_kvart" FromRole="Kvart" ToRole="Restoran" />
   </EntityType>
-  <EntityType Name="Meni">
-    <Key>
-      <PropertyRef Name="MeniId" />
-      <PropertyRef Name="JelaId" />
-    </Key>
-    <Property Name="MeniId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="JelaId" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="cijena" Type="Decimal" Precision="6" Scale="2" />
-    <Property Name="ImeJela" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="OpisJela" Type="String" MaxLength="1000" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="Restoran" Relationship="Self.fk_Meni_Restoran2" FromRole="Meni" ToRole="Restoran" />
-  </EntityType>
-  <EntityType Name="Narudba">
+  <EntityType Name="Narudzba">
     <Key>
       <PropertyRef Name="NarId" />
     </Key>
     <Property Name="NarId" Type="Int32" Nullable="false" />
-    <Property Name="Ime" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-    <Property Name="Prezime" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-    <Property Name="Telefon" Type="Int32" />
-    <Property Name="Grad" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Name="Ime" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
+    <Property Name="Telefon" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Name="Grad" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
     <Property Name="ImeKvarta" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-    <Property Name="Ulica" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="Ulica" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
     <Property Name="KucniBroj" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-    <Property Name="OIB" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
-    <Property Name="RestId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Name="OIB" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
     <Property Name="email" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
     <Property Name="ImeJela" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="cijena" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="cijena" Type="Decimal" Precision="9" Scale="2" />
     <Property Name="vrijeme" Type="Time" Precision="7" />
-    <NavigationProperty Name="Restoran" Relationship="Self.FK_Narudba_Restoran" FromRole="Narudba" ToRole="Restoran" />
+    <Property Name="kolicina" Type="Int32" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_narudzba_restoran" FromRole="Narudzba" ToRole="Restoran" />
   </EntityType>
   <EntityType Name="RadnoVrijeme">
     <Key>
-      <PropertyRef Name="RestId" />
-      <PropertyRef Name="Dan" />
+      <PropertyRef Name="RestRadId" />
     </Key>
-    <Property Name="RestId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Dan" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="RestRadId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="dan" Type="DateTime" Precision="0" />
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
     <Property Name="VrijemeOd" Type="Time" Precision="7" />
     <Property Name="VrijemeDo" Type="Time" Precision="7" />
     <Property Name="StatusRada" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="Restoran" Relationship="Self.FK_RadnoVrijeme_Restoran" FromRole="RadnoVrijeme" ToRole="Restoran" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_radnovrijeme_restoran" FromRole="RadnoVrijeme" ToRole="Restoran" />
   </EntityType>
   <EntityType Name="Rating">
     <Key>
       <PropertyRef Name="RestId" />
     </Key>
-    <Property Name="RestId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="jedna" Type="Int32" />
     <Property Name="dvije" Type="Int32" />
     <Property Name="tri" Type="Int32" />
     <Property Name="cetiri" Type="Int32" />
     <Property Name="pet" Type="Int32" />
-    <NavigationProperty Name="Restoran" Relationship="Self.FK_Restoran_Rating" FromRole="Rating" ToRole="Restoran" />
+    <Property Name="ocjena" Type="Double" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_rating_restoran" FromRole="Rating" ToRole="Restoran" />
   </EntityType>
   <EntityType Name="Restoran">
     <Key>
       <PropertyRef Name="RestId" />
     </Key>
-    <Property Name="RestId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="ImeRest" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="RestId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="ImeRest" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
     <Property Name="PostBroj" Type="Int32" />
     <Property Name="Ulica" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="KvartId" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="MeniId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Name="KvartId" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
     <Property Name="email" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="Passw" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
-    <Property Name="KucniBroj" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-    <Property Name="Telefon" Type="Int32" />
-    <Property Name="Mobitel" Type="Int32" />
-    <NavigationProperty Name="DnevniMeni" Relationship="Self.fk_DnevniMeni_Restoran2" FromRole="Restoran" ToRole="DnevniMeni" />
-    <NavigationProperty Name="Dostava" Relationship="Self.FK_Dostava_Restoran" FromRole="Restoran" ToRole="Dostava" />
-    <NavigationProperty Name="Grad" Relationship="Self.fk_Restoran_Grad2" FromRole="Restoran" ToRole="Grad" />
-    <NavigationProperty Name="Kvart" Relationship="Self.fk_Restoran_Kvart3" FromRole="Restoran" ToRole="Kvart" />
-    <NavigationProperty Name="Meni" Relationship="Self.fk_Meni_Restoran2" FromRole="Restoran" ToRole="Meni" />
-    <NavigationProperty Name="Narudba" Relationship="Self.FK_Narudba_Restoran" FromRole="Restoran" ToRole="Narudba" />
-    <NavigationProperty Name="RadnoVrijeme" Relationship="Self.FK_RadnoVrijeme_Restoran" FromRole="Restoran" ToRole="RadnoVrijeme" />
-    <NavigationProperty Name="Rating" Relationship="Self.FK_Restoran_Rating" FromRole="Restoran" ToRole="Rating" />
-    <NavigationProperty Name="Vlasnik" Relationship="Self.FK_Vlasnik_Restoran" FromRole="Restoran" ToRole="Vlasnik" />
+    <Property Name="Passw" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Name="KucniBroj" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="Telefon" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Name="Mobitel" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Name="VlasnikId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Dostava" Relationship="Self.fk_dostava_restoran" FromRole="Restoran" ToRole="Dostava" />
+    <NavigationProperty Name="Grad" Relationship="Self.fk_restoran_grad" FromRole="Restoran" ToRole="Grad" />
+    <NavigationProperty Name="JelaUDnevnomMeniju" Relationship="Self.fk_jelaudnevnommeniju_restoran" FromRole="Restoran" ToRole="JelaUDnevnomMeniju" />
+    <NavigationProperty Name="JelaUMeniju" Relationship="Self.fk_jelaumeniju_restoran" FromRole="Restoran" ToRole="JelaUMeniju" />
+    <NavigationProperty Name="Kvart" Relationship="Self.fk_restoran_kvart" FromRole="Restoran" ToRole="Kvart" />
+    <NavigationProperty Name="Narudzba" Relationship="Self.fk_narudzba_restoran" FromRole="Restoran" ToRole="Narudzba" />
+    <NavigationProperty Name="RadnoVrijeme" Relationship="Self.fk_radnovrijeme_restoran" FromRole="Restoran" ToRole="RadnoVrijeme" />
+    <NavigationProperty Name="Rating" Relationship="Self.fk_rating_restoran" FromRole="Restoran" ToRole="Rating" />
+    <NavigationProperty Name="Vlasnik" Relationship="Self.fk_restoran_vlasnik" FromRole="Restoran" ToRole="Vlasnik" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -149,11 +145,12 @@
     <Key>
       <PropertyRef Name="VlasnikId" />
     </Key>
-    <Property Name="VlasnikId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="VlasnikId" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="ImeVlasnika" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
     <Property Name="PrezimeVlasnika" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-    <Property Name="RestId" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="Restoran" Relationship="Self.FK_Vlasnik_Restoran" FromRole="Vlasnik" ToRole="Restoran" />
+    <Property Name="email" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
+    <Property Name="telefon" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Restoran" Relationship="Self.fk_restoran_vlasnik" FromRole="Vlasnik" ToRole="Restoran" />
   </EntityType>
   <EntityType Name="Zupanija">
     <Key>
@@ -163,20 +160,32 @@
     <Property Name="ZupIme" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Grad" Relationship="Self.fk_zupanija" FromRole="Zupanija" ToRole="Grad" />
   </EntityType>
-  <Association Name="fk_DnevniMeni_Restoran2">
-    <End Role="Restoran" Type="Self.Restoran" Multiplicity="1" />
-    <End Role="DnevniMeni" Type="Self.DnevniMeni" Multiplicity="*" />
+  <Association Name="fk_dostava_kvart">
+    <End Role="Kvart" Type="Self.Kvart" Multiplicity="0..1" />
+    <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kvart">
+        <PropertyRef Name="KvartId" />
+      </Principal>
+      <Dependent Role="Dostava">
+        <PropertyRef Name="KvartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_dostava_restoran">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+    <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Restoran">
         <PropertyRef Name="RestId" />
       </Principal>
-      <Dependent Role="DnevniMeni">
-        <PropertyRef Name="MeniId" />
+      <Dependent Role="Dostava">
+        <PropertyRef Name="RestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Dostava_Grad2">
-    <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+  <Association Name="fk_dostva_grad">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="0..1" />
     <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Grad">
@@ -187,48 +196,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Dostava_Kvart">
-    <End Role="Kvart" Type="Self.Kvart" Multiplicity="1" />
-    <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kvart">
-        <PropertyRef Name="KvartId" />
-        <PropertyRef Name="PostBroj" />
-      </Principal>
-      <Dependent Role="Dostava">
-        <PropertyRef Name="KvartId" />
-        <PropertyRef Name="PostBroj" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_Dostava_Kvart2">
-    <End Role="Kvart" Type="Self.Kvart" Multiplicity="1" />
-    <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kvart">
-        <PropertyRef Name="KvartId" />
-        <PropertyRef Name="PostBroj" />
-      </Principal>
-      <Dependent Role="Dostava">
-        <PropertyRef Name="KvartId" />
-        <PropertyRef Name="PostBroj" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Dostava_Restoran">
-    <End Role="Restoran" Type="Self.Restoran" Multiplicity="1" />
-    <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Restoran">
-        <PropertyRef Name="RestId" />
-      </Principal>
-      <Dependent Role="Dostava">
-        <PropertyRef Name="RestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_Kvart_Grad2">
-    <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+  <Association Name="fk_kvart_grad">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="0..1" />
     <End Role="Kvart" Type="Self.Kvart" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Grad">
@@ -239,7 +208,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Restoran_Grad2">
+  <Association Name="fk_restoran_grad">
     <End Role="Grad" Type="Self.Grad" Multiplicity="0..1" />
     <End Role="Restoran" Type="Self.Restoran" Multiplicity="*" />
     <ReferentialConstraint>
@@ -263,46 +232,56 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Restoran_Kvart3">
+  <Association Name="fk_jelaudnevnommeniju_restoran">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+    <End Role="JelaUDnevnomMeniju" Type="Self.JelaUDnevnomMeniju" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restoran">
+        <PropertyRef Name="RestId" />
+      </Principal>
+      <Dependent Role="JelaUDnevnomMeniju">
+        <PropertyRef Name="RestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_jelaumeniju_restoran">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="1" />
+    <End Role="JelaUMeniju" Type="Self.JelaUMeniju" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restoran">
+        <PropertyRef Name="RestId" />
+      </Principal>
+      <Dependent Role="JelaUMeniju">
+        <PropertyRef Name="RestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_restoran_kvart">
     <End Role="Kvart" Type="Self.Kvart" Multiplicity="0..1" />
     <End Role="Restoran" Type="Self.Restoran" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Kvart">
         <PropertyRef Name="KvartId" />
-        <PropertyRef Name="PostBroj" />
       </Principal>
       <Dependent Role="Restoran">
         <PropertyRef Name="KvartId" />
-        <PropertyRef Name="PostBroj" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Meni_Restoran2">
-    <End Role="Restoran" Type="Self.Restoran" Multiplicity="1" />
-    <End Role="Meni" Type="Self.Meni" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Restoran">
-        <PropertyRef Name="RestId" />
-      </Principal>
-      <Dependent Role="Meni">
-        <PropertyRef Name="MeniId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Narudba_Restoran">
+  <Association Name="fk_narudzba_restoran">
     <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
-    <End Role="Narudba" Type="Self.Narudba" Multiplicity="*" />
+    <End Role="Narudzba" Type="Self.Narudzba" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Restoran">
         <PropertyRef Name="RestId" />
       </Principal>
-      <Dependent Role="Narudba">
+      <Dependent Role="Narudzba">
         <PropertyRef Name="RestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RadnoVrijeme_Restoran">
-    <End Role="Restoran" Type="Self.Restoran" Multiplicity="1" />
+  <Association Name="fk_radnovrijeme_restoran">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
     <End Role="RadnoVrijeme" Type="Self.RadnoVrijeme" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Restoran">
@@ -313,68 +292,60 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Restoran_Rating">
-    <End Role="Rating" Type="Self.Rating" Multiplicity="1" />
-    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Rating">
-        <PropertyRef Name="RestId" />
-      </Principal>
-      <Dependent Role="Restoran">
-        <PropertyRef Name="RestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Vlasnik_Restoran">
-    <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
-    <End Role="Vlasnik" Type="Self.Vlasnik" Multiplicity="*" />
+  <Association Name="fk_rating_restoran">
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="1" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Restoran">
         <PropertyRef Name="RestId" />
       </Principal>
-      <Dependent Role="Vlasnik">
+      <Dependent Role="Rating">
         <PropertyRef Name="RestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_restoran_vlasnik">
+    <End Role="Vlasnik" Type="Self.Vlasnik" Multiplicity="0..1" />
+    <End Role="Restoran" Type="Self.Restoran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vlasnik">
+        <PropertyRef Name="VlasnikId" />
+      </Principal>
+      <Dependent Role="Restoran">
+        <PropertyRef Name="VlasnikId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="FDBContext" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="DnevniMeni" EntityType="Self.DnevniMeni" />
     <EntitySet Name="Dostava" EntityType="Self.Dostava" />
     <EntitySet Name="Grad" EntityType="Self.Grad" />
+    <EntitySet Name="JelaUDnevnomMeniju" EntityType="Self.JelaUDnevnomMeniju" />
+    <EntitySet Name="JelaUMeniju" EntityType="Self.JelaUMeniju" />
     <EntitySet Name="Kvart" EntityType="Self.Kvart" />
-    <EntitySet Name="Meni" EntityType="Self.Meni" />
-    <EntitySet Name="Narudba" EntityType="Self.Narudba" />
+    <EntitySet Name="Narudzba" EntityType="Self.Narudzba" />
     <EntitySet Name="RadnoVrijeme" EntityType="Self.RadnoVrijeme" />
     <EntitySet Name="Rating" EntityType="Self.Rating" />
     <EntitySet Name="Restoran" EntityType="Self.Restoran" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Vlasnik" EntityType="Self.Vlasnik" />
     <EntitySet Name="Zupanija" EntityType="Self.Zupanija" />
-    <AssociationSet Name="fk_DnevniMeni_Restoran2" Association="Self.fk_DnevniMeni_Restoran2">
-      <End Role="Restoran" EntitySet="Restoran" />
-      <End Role="DnevniMeni" EntitySet="DnevniMeni" />
-    </AssociationSet>
-    <AssociationSet Name="fk_Dostava_Grad2" Association="Self.fk_Dostava_Grad2">
-      <End Role="Grad" EntitySet="Grad" />
-      <End Role="Dostava" EntitySet="Dostava" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Dostava_Kvart" Association="Self.FK_Dostava_Kvart">
+    <AssociationSet Name="fk_dostava_kvart" Association="Self.fk_dostava_kvart">
       <End Role="Kvart" EntitySet="Kvart" />
       <End Role="Dostava" EntitySet="Dostava" />
     </AssociationSet>
-    <AssociationSet Name="fk_Dostava_Kvart2" Association="Self.fk_Dostava_Kvart2">
-      <End Role="Kvart" EntitySet="Kvart" />
-      <End Role="Dostava" EntitySet="Dostava" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Dostava_Restoran" Association="Self.FK_Dostava_Restoran">
+    <AssociationSet Name="fk_dostava_restoran" Association="Self.fk_dostava_restoran">
       <End Role="Restoran" EntitySet="Restoran" />
       <End Role="Dostava" EntitySet="Dostava" />
     </AssociationSet>
-    <AssociationSet Name="fk_Kvart_Grad2" Association="Self.fk_Kvart_Grad2">
+    <AssociationSet Name="fk_dostva_grad" Association="Self.fk_dostva_grad">
+      <End Role="Grad" EntitySet="Grad" />
+      <End Role="Dostava" EntitySet="Dostava" />
+    </AssociationSet>
+    <AssociationSet Name="fk_kvart_grad" Association="Self.fk_kvart_grad">
       <End Role="Grad" EntitySet="Grad" />
       <End Role="Kvart" EntitySet="Kvart" />
     </AssociationSet>
-    <AssociationSet Name="fk_Restoran_Grad2" Association="Self.fk_Restoran_Grad2">
+    <AssociationSet Name="fk_restoran_grad" Association="Self.fk_restoran_grad">
       <End Role="Grad" EntitySet="Grad" />
       <End Role="Restoran" EntitySet="Restoran" />
     </AssociationSet>
@@ -382,29 +353,33 @@
       <End Role="Zupanija" EntitySet="Zupanija" />
       <End Role="Grad" EntitySet="Grad" />
     </AssociationSet>
-    <AssociationSet Name="fk_Restoran_Kvart3" Association="Self.fk_Restoran_Kvart3">
+    <AssociationSet Name="fk_jelaudnevnommeniju_restoran" Association="Self.fk_jelaudnevnommeniju_restoran">
+      <End Role="Restoran" EntitySet="Restoran" />
+      <End Role="JelaUDnevnomMeniju" EntitySet="JelaUDnevnomMeniju" />
+    </AssociationSet>
+    <AssociationSet Name="fk_jelaumeniju_restoran" Association="Self.fk_jelaumeniju_restoran">
+      <End Role="Restoran" EntitySet="Restoran" />
+      <End Role="JelaUMeniju" EntitySet="JelaUMeniju" />
+    </AssociationSet>
+    <AssociationSet Name="fk_restoran_kvart" Association="Self.fk_restoran_kvart">
       <End Role="Kvart" EntitySet="Kvart" />
       <End Role="Restoran" EntitySet="Restoran" />
     </AssociationSet>
-    <AssociationSet Name="fk_Meni_Restoran2" Association="Self.fk_Meni_Restoran2">
+    <AssociationSet Name="fk_narudzba_restoran" Association="Self.fk_narudzba_restoran">
       <End Role="Restoran" EntitySet="Restoran" />
-      <End Role="Meni" EntitySet="Meni" />
+      <End Role="Narudzba" EntitySet="Narudzba" />
     </AssociationSet>
-    <AssociationSet Name="FK_Narudba_Restoran" Association="Self.FK_Narudba_Restoran">
-      <End Role="Restoran" EntitySet="Restoran" />
-      <End Role="Narudba" EntitySet="Narudba" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RadnoVrijeme_Restoran" Association="Self.FK_RadnoVrijeme_Restoran">
+    <AssociationSet Name="fk_radnovrijeme_restoran" Association="Self.fk_radnovrijeme_restoran">
       <End Role="Restoran" EntitySet="Restoran" />
       <End Role="RadnoVrijeme" EntitySet="RadnoVrijeme" />
     </AssociationSet>
-    <AssociationSet Name="FK_Restoran_Rating" Association="Self.FK_Restoran_Rating">
+    <AssociationSet Name="fk_rating_restoran" Association="Self.fk_rating_restoran">
+      <End Role="Restoran" EntitySet="Restoran" />
       <End Role="Rating" EntitySet="Rating" />
-      <End Role="Restoran" EntitySet="Restoran" />
     </AssociationSet>
-    <AssociationSet Name="FK_Vlasnik_Restoran" Association="Self.FK_Vlasnik_Restoran">
-      <End Role="Restoran" EntitySet="Restoran" />
+    <AssociationSet Name="fk_restoran_vlasnik" Association="Self.fk_restoran_vlasnik">
       <End Role="Vlasnik" EntitySet="Vlasnik" />
+      <End Role="Restoran" EntitySet="Restoran" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

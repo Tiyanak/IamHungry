@@ -17,8 +17,58 @@ namespace IamHungry.Controllers
         //GET: /home/pocetna
         public ActionResult Index()
         {
+            ViewBag.gradLista = new SelectList(fdb.Grad, "PostBroj", "ImeGrada");
+            ViewBag.kvartLista = new SelectList(fdb.Kvart, "KvartId", "ImeKvarta");
+            ViewBag.zupLista = new SelectList(fdb.Zupanija, "ZupId", "ZupIme");
+
+            var r = from k in fdb.Restoran select k;
+
+            List<Restoran> racR = new List<Restoran>(10);
+            foreach(var i in r)
+            {
+                Rating rest = fdb.Rating.Find(i.RestId);
+
+                int? brojglasaca = rest.jedna + rest.dvije + rest.tri + rest.cetiri + rest.pet;
+                if (brojglasaca == 0 || brojglasaca == null)
+                {
+                    brojglasaca = 1;
+                }
+                int? zbrojocjena = rest.jedna + rest.dvije * 2 + rest.tri * 3 + rest.cetiri * 4 + rest.pet * 5;
+                double? rating = (double) zbrojocjena/brojglasaca;
+                double rat = (double)rating;
+                rat = System.Math.Round(rat, 2);
+                rest.ocjena = rat;
+            }
+            fdb.SaveChanges();
+            foreach (var i in r)
+            {
+                if(racR.Count < 10)
+                {
+                    racR.Add(i);
+                }else
+                {
+                    double? min = 5.0;
+                    Restoran minRest = new Restoran();
+                    foreach(var k in racR)
+                    {
+                        if(k.Rating.ocjena < min)
+                        {
+                            min = k.Rating.ocjena;
+                            minRest = k;
+                        }
+                    }
+                    if(minRest.Rating.ocjena >= i.Rating.ocjena)
+                    {
+                        continue;
+                    }else
+                    {
+                        racR.Remove(minRest);
+                        racR.Add(i);
+                    }
+                }
+            }
             
-            return View();
+            return View(racR);
         }
 
         public JsonResult getZup()
@@ -50,10 +100,11 @@ namespace IamHungry.Controllers
             return View();
         }
         
+        [HttpGet]
         public ActionResult SearchRestorans()
         {
-            var restorani = from r in fdb.Restoran select r;
-            return View(restorani);
+            var r = from k in fdb.Restoran select k;
+            return View(r);
         }
 
         [HttpPost]
@@ -65,7 +116,7 @@ namespace IamHungry.Controllers
         public ActionResult Meni(string idMenija)
         {
 
-            var meni = from m in fdb.Meni where m.MeniId == idMenija select m;
+            var meni = from m in fdb.JelaUMeniju where m.RestId == idMenija select m;
             var rest = fdb.Restoran.Single(u => u.RestId == idMenija);
             ViewBag.ImeTrenRestorana = rest.ImeRest.ToString();
             return View(meni);
@@ -73,18 +124,23 @@ namespace IamHungry.Controllers
 
         public ActionResult DnevniMeni(string idMenija)
         { 
-            var dnevnimeni = from d in fdb.DnevniMeni where d.MeniId == idMenija select d;
+            var dnevnimeni = from d in fdb.JelaUDnevnomMeniju where d.RestId == idMenija select d;
             return View(dnevnimeni);
         }
 
         public ActionResult NarudbaMeni(string idM, string idJ, decimal? cijenaJ)
         {
+            if(Session["NarPos"] != null)
+            {
+                ViewBag.NarPos = Session["NarPos"];
+                Session["NarPos"] = null;
+            }
             GradDropDownList();
             KvardDropDownList();
             ViewBag.ncijena = cijenaJ;
             ViewBag.nidM = idM;
             ViewBag.nidJ = idJ;
-            Narudba nar = new Narudba();
+            Narudzba nar = new Narudzba();
             nar.RestId = idM;
             nar.ImeJela = idJ;
             nar.cijena = cijenaJ;
@@ -93,15 +149,27 @@ namespace IamHungry.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> NarudbaMeni(Narudba nar)
+        public async System.Threading.Tasks.Task<ActionResult> NarudbaMeni(Narudzba nar)
         {
             if (ModelState.IsValid)
             {
-                int zadnjaNar = fdb.Narudba.Max(p => p.NarId);
+                int zadnjaNar = fdb.Narudzba.Max(p => p.NarId);
                 nar.NarId = zadnjaNar + 1;
-                fdb.Narudba.Add(nar);
+                fdb.Narudzba.Add(nar);
                 fdb.SaveChanges();
-                ViewBag.Nar = "Narudba poslana, vas broj narudbe je: " + nar.NarId;
+
+                if (nar.email == null)
+                {
+                    nar.email = "korisnikNemaEmail@noEmail.com";
+                }
+                if(nar.ImeKvarta == null)
+                {
+                    nar.ImeKvarta = "";
+                }
+                if(nar.Telefon == null)
+                {
+                    nar.Telefon = "";
+                }
 
                 var restoranPrimatelj = fdb.Restoran.Single(u => u.RestId == nar.RestId);
                 string primatelj = restoranPrimatelj.email.ToString();
@@ -118,12 +186,12 @@ namespace IamHungry.Controllers
                 }
 
 
-                var body = "<p>Narucitelj: {0} </p><p>E-mail: {1}</p><p>Adresa: {2}</p><p>Telefon: {3}</p><p>Ime jela: {4}</p><p>Cijena: {5}</p><p>Vrijeme narudbe: {6}</p>";
+                var body = "<p>Narucitelj: {0} </p><p>E-mail: {1}</p><p>Adresa: {2}</p><p>Telefon: {3}</p><p>Ime jela: {4}</p><p>Cijena: {5}</p><p>Vrijeme narudbe: {6}</p><p>Količina: {7}";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(primatelj));
                 message.From = new MailAddress(posiljatelj);
                 message.Subject = "Narudba - " + nar.NarId;
-                message.Body = string.Format(body, imeNarucitelja, posiljatelj, adresa, nar.Telefon.ToString(), nar.ImeJela.ToString(), nar.cijena.ToString(), nar.vrijeme.ToString());
+                message.Body = string.Format(body, imeNarucitelja, posiljatelj, adresa, nar.Telefon.ToString(), nar.ImeJela.ToString(), nar.cijena.ToString(), nar.vrijeme.ToString(), nar.kolicina);
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
@@ -131,17 +199,151 @@ namespace IamHungry.Controllers
                     var credential = new NetworkCredential
                     {
                         UserName = "i_farszky@hotmail.com",
-                        Password = "Vrbovec1"
+                        Password = "Vrbovec22"
                     };
                     smtp.Credentials = credential;
                     smtp.Host = "smtp-mail.outlook.com";
                     smtp.Port = 587;
                     smtp.EnableSsl = true;
                     await smtp.SendMailAsync(message);
-                    return RedirectToAction("NarudbaMeni", "Home");
+                    Session["RestRat"] = nar.RestId.ToString();
+                    Session["NarId"] = nar.NarId.ToString();
+                    return RedirectToAction("NarudbaPoslano");
                 }
             }
-            ViewBag.FailSendNarudba = "Narudba nije poslana, kvar u sustavu";
+            ViewBag.FailSendNarudba = "Narudba nije poslana, krivo ste unijeli podatke.";
+            return View();
+        }
+
+        public ActionResult NarudbaPoslano()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NarudbaPoslano(string submit)
+        {
+            String restoran = "";
+            if(Session["RestRat"] != null)
+            {
+                restoran = Session["RestRat"].ToString();
+                Session["RestRat"] = null;
+                Session["NarId"] = null;
+            }
+            string button = submit;
+            var rat = fdb.Rating.Find(restoran);
+            int oc = 0;
+            switch (button)
+            {
+                case "1":
+                    oc = Int32.Parse(rat.jedna.ToString());
+                    oc = oc + 1;
+                    rat.jedna = oc;
+                    break;
+                case "2":
+                    oc = Int32.Parse(rat.dvije.ToString());
+                    oc = oc + 1;
+                    rat.dvije = oc;
+                    break;
+                case "3":
+                    oc = Int32.Parse(rat.tri.ToString());
+                    oc = oc + 1;
+                    rat.tri = oc;
+                    break;
+                case "4":
+                    oc = Int32.Parse(rat.cetiri.ToString());
+                    oc = oc + 1;
+                    rat.cetiri = oc;
+                    break;
+                case "5":
+                    oc = Int32.Parse(rat.pet.ToString());
+                    oc = oc + 1;
+                    rat.pet = oc;
+                    break;
+                default:
+                    break;
+            }
+            fdb.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult NarudbaDnevniMeni(string idDJ)
+        {
+            GradDropDownList();
+            KvardDropDownList();
+            Narudzba nar = new Narudzba();
+            var jelo = fdb.JelaUDnevnomMeniju.Find(idDJ);
+            nar.RestId = jelo.RestId;
+            nar.ImeJela = jelo.ImeJela;
+            nar.cijena = jelo.cjena;
+            return View(nar);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async System.Threading.Tasks.Task<ActionResult> NarudbaDnevniMeni(Narudzba nar)
+        {
+            if (ModelState.IsValid)
+            {
+                int zadnjaNar = fdb.Narudzba.Max(p => p.NarId);
+                nar.NarId = zadnjaNar + 1;
+                fdb.Narudzba.Add(nar);
+                fdb.SaveChanges();
+
+                if (nar.email == null)
+                {
+                    nar.email = "korisnikNemaEmail@noEmail.com";
+                }
+                if (nar.ImeKvarta == null)
+                {
+                    nar.ImeKvarta = "";
+                }
+                if (nar.Telefon == null)
+                {
+                    nar.Telefon = "";
+                }
+
+                var restoranPrimatelj = fdb.Restoran.Single(u => u.RestId == nar.RestId);
+                string primatelj = restoranPrimatelj.email.ToString();
+                string posiljatelj = nar.email.ToString();
+                string imeNarucitelja = nar.Ime + " " + nar.Prezime;
+                string adresa = "";
+                if (nar.Grad.Equals(nar.ImeKvarta))
+                {
+                    adresa = nar.Grad + " " + nar.Ulica + " " + nar.KucniBroj;
+                }
+                else
+                {
+                    adresa = nar.Grad + " " + nar.ImeKvarta + " " + nar.Ulica + " " + nar.KucniBroj;
+                }
+
+
+                var body = "<p>Narucitelj: {0} </p><p>E-mail: {1}</p><p>Adresa: {2}</p><p>Telefon: {3}</p><p>Ime jela: {4}</p><p>Cijena: {5}</p><p>Vrijeme narudbe: {6}</p><p>Količina: {7}";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(primatelj));
+                message.From = new MailAddress(posiljatelj);
+                message.Subject = "Narudba - " + nar.NarId;
+                message.Body = string.Format(body, imeNarucitelja, posiljatelj, adresa, nar.Telefon.ToString(), nar.ImeJela.ToString(), nar.cijena.ToString(), nar.vrijeme.ToString(), nar.kolicina);
+                message.IsBodyHtml = true;
+           
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "i_farszky@hotmail.com",
+                        Password = "Vrbovec22"
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.outlook.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    Session["RestRat"] = nar.RestId.ToString();
+                    Session["NarId"] = nar.NarId.ToString();
+                    return RedirectToAction("NarudbaPoslano");
+                }
+            }
+            ViewBag.FailSendNarudba = "Narudba nije poslana, krivo ste unijeli podatke.";
             return View();
         }
 
@@ -152,80 +354,6 @@ namespace IamHungry.Controllers
                 idMenija = Session["UserId"].ToString();
             }
             Restoran r = fdb.Restoran.Single(t => t.RestId == idMenija);
-            var rat = fdb.Rating.Single(u => u.RestId == idMenija);
-            var pon = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Ponedjeljak");
-            var uto = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Utorak");
-            var sri = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Srijeda");
-            var cet = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Cetvrtak");
-            var pet = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Petak");
-            var sub = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Subota");
-            var ned = fdb.RadnoVrijeme.Single(k => k.RestId == idMenija && k.Dan.ToString() == "Nedjelja");
-
-            int? brojglasaca = rat.jedna + rat.dvije + rat.tri + rat.cetiri + rat.pet;
-            if(brojglasaca == 0 || brojglasaca == null)
-            {
-                brojglasaca = 1;
-            }
-            int? zbrojocjena = rat.jedna + rat.dvije * 2 + rat.tri * 3 + rat.cetiri * 4 + rat.pet * 5;
-            double rating = (double)(zbrojocjena / brojglasaca);
-            ViewBag.Rating = rating;
-
-            if (pon.VrijemeDo != null || pon.VrijemeOd != null)
-            {
-                ViewBag.pon = "" + pon.VrijemeOd + " - " + pon.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.pon = "Ne radimo";
-            }
-            if (uto.VrijemeDo != null || uto.VrijemeOd != null)
-            {
-                ViewBag.uto = "" + uto.VrijemeOd + " - " + uto.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.uto = "Ne radimo";
-            }
-            if (sri.VrijemeDo != null || sri.VrijemeOd != null)
-            {
-                ViewBag.sri = "" + sri.VrijemeOd + " - " + sri.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.sri = "Ne radimo";
-            }
-            if (cet.VrijemeDo != null || cet.VrijemeOd != null)
-            {
-                ViewBag.cet = "" + cet.VrijemeOd + " - " + cet.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.cet = "Ne radimo";
-            }
-            if (pet.VrijemeDo != null || pet.VrijemeOd != null)
-            {
-                ViewBag.pet = "" + pet.VrijemeOd + " - " + pet.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.pet = "Ne radimo";
-            }
-            if (sub.VrijemeDo != null || sub.VrijemeOd != null)
-            {
-                ViewBag.sub = "" + sub.VrijemeOd + " - " + sub.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.sub = "Ne radimo";
-            }
-            if (ned.VrijemeDo != null || ned.VrijemeOd != null)
-            {
-                ViewBag.ned = "" + ned.VrijemeOd + " - " + ned.VrijemeDo;
-            }
-            else
-            {
-                ViewBag.ned = "Ne radimo";
-            }
 
             return View(r);
         }

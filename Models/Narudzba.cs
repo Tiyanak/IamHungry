@@ -11,23 +11,32 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Narudba
+    using System.ComponentModel.DataAnnotations;
+    public partial class Narudzba
     {
         public int NarId { get; set; }
+        [Required(ErrorMessage = "Upišite svoje ime.")] 
         public string Ime { get; set; }
+        [Required(ErrorMessage = "Upišite svoje prezime.")]
         public string Prezime { get; set; }
-        public Nullable<int> Telefon { get; set; }
+        public string Telefon { get; set; }
+        [Required(ErrorMessage = "Upišite grad dostave.")]
         public string Grad { get; set; }
         public string ImeKvarta { get; set; }
+        [Required(ErrorMessage = "Upišite ulicu dostave.")]
         public string Ulica { get; set; }
+        [Required(ErrorMessage = "Upišite vaš kuæni broj.")]
         public string KucniBroj { get; set; }
         public string OIB { get; set; }
         public string RestId { get; set; }
         public string email { get; set; }
         public string ImeJela { get; set; }
         public Nullable<decimal> cijena { get; set; }
+        [Required(ErrorMessage = "Upišite željeno vrijeme dostave.")]
+        [DataType(DataType.Time)]
         public Nullable<System.TimeSpan> vrijeme { get; set; }
+        [Required(ErrorMessage = "Upišite željenu kolièinu.")]
+        public Nullable<int> kolicina { get; set; }
     
         public virtual Restoran Restoran { get; set; }
     }

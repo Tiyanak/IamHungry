@@ -11,46 +11,55 @@ namespace IamHungry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Restoran
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Restoran()
         {
-            this.DnevniMeni = new HashSet<DnevniMeni>();
             this.Dostava = new HashSet<Dostava>();
-            this.Meni = new HashSet<Meni>();
-            this.Narudba = new HashSet<Narudba>();
+            this.JelaUDnevnomMeniju = new HashSet<JelaUDnevnomMeniju>();
+            this.JelaUMeniju = new HashSet<JelaUMeniju>();
+            this.Narudzba = new HashSet<Narudzba>();
             this.RadnoVrijeme = new HashSet<RadnoVrijeme>();
-            this.Vlasnik = new HashSet<Vlasnik>();
         }
-    
+        [Key]
+        [Required(ErrorMessage = "Obavezno upišite OIB restorana!")]
+        [StringLength(20, ErrorMessage = "OIB nemože biti dulji od 20 znakova.")]
         public string RestId { get; set; }
+        [Required(ErrorMessage = "Upišite ime restorana.")]
         public string ImeRest { get; set; }
         public Nullable<int> PostBroj { get; set; }
+        [Required(ErrorMessage = "Upišite ulicu restorana.")]
         public string Ulica { get; set; }
         public string KvartId { get; set; }
-        public string MeniId { get; set; }
+        [Required(ErrorMessage = "Upišite e-mail adresu restorana.")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Adresa nije valjana.")]
         public string email { get; set; }
+        [Required(ErrorMessage = "Upišite lozinku.")]
+        [DataType(DataType.Password, ErrorMessage = "Lozinka nije valjanog oblika, mora saržavati barem 6 znakova, bar 1 veliko slovo i 1 znak koje nije slovo.")]
         public string Passw { get; set; }
+        [Required(ErrorMessage = "Upišite kuæni broj restorana.")]
         public string KucniBroj { get; set; }
-        public Nullable<int> Telefon { get; set; }
-        public Nullable<int> Mobitel { get; set; }
+        public string Telefon { get; set; }
+        public string Mobitel { get; set; }
+        [Required(ErrorMessage = "Upišite OIB vlasnika restorana.")]
+        [StringLength(11, ErrorMessage = "OIB mora sadržavati 11 brojeva.")]
+        public string VlasnikId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DnevniMeni> DnevniMeni { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dostava> Dostava { get; set; }
         public virtual Grad Grad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JelaUDnevnomMeniju> JelaUDnevnomMeniju { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JelaUMeniju> JelaUMeniju { get; set; }
         public virtual Kvart Kvart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Meni> Meni { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Narudba> Narudba { get; set; }
+        public virtual ICollection<Narudzba> Narudzba { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RadnoVrijeme> RadnoVrijeme { get; set; }
         public virtual Rating Rating { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vlasnik> Vlasnik { get; set; }
+        public virtual Vlasnik Vlasnik { get; set; }
     }
 }

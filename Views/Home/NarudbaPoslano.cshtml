@@ -1,0 +1,29 @@
+﻿<br><br><br>
+
+<h1>Vaša narudžba je zaprimljena, želimo vam dobar tek :)</h1>
+
+<h1>Broj narudžbe: @Session["NarId"]</h1>
+
+<br><br><br>
+
+<h3>Ako ste zadovoljni uslugama i jelima ovog restorana, molimo ocijenite ga.</h3>
+<br>
+
+<body>
+    @using (Html.BeginForm("NarudbaPoslano", "Home", FormMethod.Post))
+    {
+        <input type="submit" value="1" name="submit" class="btn btn-default" />
+        <input type="submit" value="2" name="submit" class="btn btn-default" />
+        <input type="submit" value="3" name="submit" class="btn btn-default" />
+        <input type="submit" value="4" name="submit" class="btn btn-default" />
+        <input type="submit" value="5" name="submit" class="btn btn-default" />
+    }
+</body>
+
+
+<br><br><br><br><br><br>
+
+
+
+
+

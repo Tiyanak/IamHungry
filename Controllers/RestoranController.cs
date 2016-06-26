@@ -37,15 +37,44 @@ namespace IamHungry.Controllers
                 Restoran r = fdb.Restoran.Find(restoran.RestId);
 
                 r.ImeRest = restoran.ImeRest;
-                r.KucniBroj = restoran.KucniBroj;
+                if(restoran.KucniBroj != null)
+                {
+                    r.KucniBroj = restoran.KucniBroj;
+                }
+               
                 r.KvartId = restoran.KvartId;
                 r.PostBroj = restoran.PostBroj;
-                r.Passw = restoran.Passw;
-                r.Ulica = restoran.Ulica;
-                r.email = restoran.email;
-                r.MeniId = restoran.RestId;
-                r.Telefon = restoran.Telefon;
-                r.Mobitel = restoran.Mobitel;
+
+                if(restoran.Passw != null)
+                {
+                    r.Passw = restoran.Passw;
+                }
+               
+                if(restoran.Ulica != null)
+                {
+                    r.Ulica = restoran.Ulica;
+                }
+                
+                if(restoran.email != null)
+                {
+                    r.email = restoran.email;
+                }
+                
+                if(restoran.Telefon != null)
+                {
+                    r.Telefon = restoran.Telefon;
+                }
+                
+                if(restoran.Mobitel != null)
+                {
+                    r.Mobitel = restoran.Mobitel;
+                }
+               
+                if(restoran.VlasnikId != null)
+                {
+                    r.VlasnikId = restoran.VlasnikId;
+                }
+                
 
                 fdb.SaveChanges();
                
@@ -63,24 +92,27 @@ namespace IamHungry.Controllers
             return View(dost);
         }
 
-        public ActionResult IzmijeniDostavu(string idR, string idK, int idG)
+        public ActionResult IzmijeniDostavu(string idD)
         {
             Dostava d = new Dostava();
-            d.RestId = idR;
-            d.PostBroj = idG;
-            d.KvartId = idK;
+            d.DostavaId = idD;
+            d.RestId = Session["UserId"].ToString();
+            ViewBag.GradD = new SelectList(fdb.Grad, "PostBroj", "ImeGrada");
+            ViewBag.KvartD = new SelectList(fdb.Kvart, "KvartId", "ImeKvarta");
             return View(d);
         }
 
         [HttpPost]
         public ActionResult IzmijeniDostavu(Dostava d)
         {
-            var dost = fdb.Dostava.Find(d.RestId, d.KvartId, d.PostBroj);
+            var dost = fdb.Dostava.Find(d.DostavaId);
             if (ModelState.IsValid)
             {
                 if(d.vrijeme != null)
                 {
                     dost.vrijeme = d.vrijeme;
+                    dost.PostBroj = d.PostBroj;
+                    dost.KvartId = d.KvartId;
                 }
                 fdb.SaveChanges();
                 return RedirectToAction("UrediDostavu");
@@ -89,9 +121,9 @@ namespace IamHungry.Controllers
             return View(d);
         }
 
-        public ActionResult IzbrisiDostavu(string idR, string idK, int idG)
+        public ActionResult IzbrisiDostavu(string idD)
         {
-            var d = fdb.Dostava.Find(idR, idK, idG);
+            var d = fdb.Dostava.Find(idD);
             fdb.Dostava.Remove(d);
             fdb.SaveChanges();
             return RedirectToAction("UrediDostavu");
@@ -110,6 +142,7 @@ namespace IamHungry.Controllers
         [HttpPost]
         public ActionResult DodajDostavu(Dostava d)
         {
+            d.DostavaId = d.RestId.Substring(0, 5).ToString() + d.KvartId.Substring(0, 5).ToString();
             if (ModelState.IsValid)
             {
                 fdb.Dostava.Add(d);
@@ -131,15 +164,13 @@ namespace IamHungry.Controllers
             if (Session["UserId"] != null)
             {
                 rv.RestId = Session["UserId"].ToString();
+                rv.RestRadId = rv.RestId.Substring(0, 5).ToString() + rv.dan.ToString();
             }
             if (ModelState.IsValid)
             {
-                var rad = fdb.RadnoVrijeme.Find(rv.RestId, rv.Dan);
-                rad.StatusRada = rv.StatusRada;
-                rad.VrijemeOd = rv.VrijemeOd;
-                rad.VrijemeDo = rv.VrijemeDo;
+                fdb.RadnoVrijeme.Add(rv);
                 fdb.SaveChanges();
-                ViewBag.RadnoVrijeme = "Azurirali ste radno vrijeme za " + rad.Dan.ToString() + " na: " + rad.VrijemeOd.ToString() + " - " + rad.VrijemeDo.ToString();
+                ViewBag.RadnoVrijeme = "Azurirali ste radno vrijeme za " + rv.dan.ToString() + " na: " + rv.VrijemeOd.ToString() + " - " + rv.VrijemeDo.ToString();
                 return View();
             }
             return View();
